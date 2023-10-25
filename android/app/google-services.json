@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "76911324684",
+    "project_id": "tracksrealestateegy",
+    "storage_bucket": "tracksrealestateegy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76911324684:android:ee1f8e08c75dca36d68829",
+        "android_client_info": {
+          "package_name": "com.example.tracks_admin_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG8mLS-u7WZ_hRR33HLWHA0yQMUHMlSzE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
