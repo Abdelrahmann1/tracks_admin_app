@@ -151,7 +151,8 @@ class TodayView extends HookView<HomeViewModel> {
                 key: key,
                 onSubmit: (){},
               );
-            })
+            }),
+            Text("")
 
           ],
         ),
