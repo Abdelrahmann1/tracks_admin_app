@@ -45,7 +45,8 @@ class HomeView extends HookView<HomeViewModel> {
               BoxShadow(
                   color: Colors.black26, blurRadius: 10, offset: Offset(2, 3)),
             ]),
-        child: ClipRect(
+        child:
+        ClipRect(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,

@@ -44,6 +44,7 @@ dependencies:
   shared_preferences: ^2.2.2
   pmvvm: ^2.3.0
   font_awesome_flutter: ^10.6.0
+  slide_to_act: ^2.0.2
 
 dev_dependencies:
   flutter_test:
