@@ -5,10 +5,8 @@ import 'package:tracks_admin_app/extentions/padding_ext.dart';
 import 'package:tracks_admin_app/screens/Calendar_Screen/calendar_screen_view.dart';
 import 'package:tracks_admin_app/screens/Home/home_view_model.dart';
 import 'package:tracks_admin_app/utils/app_colors.dart';
-
 import '../profile_screen/profile_view.dart';
 import '../todays_task/todays_view.dart';
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
   @override
@@ -19,7 +17,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
 class HomeView extends HookView<HomeViewModel> {
   const HomeView({Key? key, reactive = true});
 
@@ -28,7 +25,6 @@ class HomeView extends HookView<HomeViewModel> {
     return Scaffold(
       body: IndexedStack(
         index: viewModel.currentIndex,
-
         children: const [
           CalenderScreen(),
           TodayScreen(),
@@ -45,8 +41,7 @@ class HomeView extends HookView<HomeViewModel> {
               BoxShadow(
                   color: Colors.black26, blurRadius: 10, offset: Offset(2, 3)),
             ]),
-        child:
-        ClipRect(
+        child: ClipRect(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -70,19 +65,18 @@ class HomeView extends HookView<HomeViewModel> {
                               : AppColors.shadowColorDark,
                           size: i == viewModel.currentIndex ? 30 : 25,
                         ),
-                        i == viewModel.currentIndex ? Container(
-                          margin: const EdgeInsets.only(top: 6),
-                          height: 3,
-                          width: 22,
-                          decoration: const BoxDecoration(
-                              color: AppColors.primaryColor,
-
-                              borderRadius: BorderRadius.all(Radius.circular(40))
-                          ),
-                        ):const SizedBox(),
-
+                        i == viewModel.currentIndex
+                            ? Container(
+                                margin: const EdgeInsets.only(top: 6),
+                                height: 3,
+                                width: 22,
+                                decoration: const BoxDecoration(
+                                    color: AppColors.primaryColor,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(40))),
+                              )
+                            : const SizedBox(),
                       ],
-
                     ),
                   ),
                 ))

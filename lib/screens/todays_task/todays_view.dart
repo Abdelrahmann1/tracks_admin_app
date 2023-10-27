@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pmvvm/mvvm_builder.widget.dart';
 import 'package:pmvvm/views/hook.view.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'package:tracks_admin_app/extentions/padding_ext.dart';
+import 'package:tracks_admin_app/models/user_model.dart';
 import 'package:tracks_admin_app/screens/Home/home_view_model.dart';
 import 'package:tracks_admin_app/screens/todays_task/today_view_model.dart';
 import 'package:tracks_admin_app/utils/app_colors.dart';
@@ -32,17 +36,17 @@ class TodayView extends HookView<HomeViewModel> {
               margin: const EdgeInsets.only(top: 30),
               alignment: Alignment.centerLeft,
               child: const Text(
-                "Welcome",
+                "WELCOME",
                 style:
-                    TextStyle(color: AppColors.shadowColorLight, fontSize: 18),
+                    TextStyle(color: AppColors.shadowColorLight, fontSize: 18 ,fontWeight: FontWeight.w400),
               ),
             ),
             Container(
               margin: const EdgeInsets.only(top: 5),
               alignment: Alignment.centerLeft,
-              child: const Text(
-                "Employee Name",
-                style: TextStyle(
+              child: Text(
+                User.userName,
+                style: const TextStyle(
                     color: AppColors.shadowColorLight,
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
@@ -83,10 +87,9 @@ class TodayView extends HookView<HomeViewModel> {
                     children: [
                       Text(
                         "Check In ",
-                        style:
-                            TextStyle(fontSize: 18, color: AppColors.green),
+                        style: TextStyle(fontSize: 18, color: AppColors.green),
                       ),
-                      Text("09:30 ",
+                      Text("10:00 ",
                           style: TextStyle(
                               fontSize: 20,
                               color: AppColors.black54,
@@ -99,61 +102,76 @@ class TodayView extends HookView<HomeViewModel> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text("Check Out",
-                          style: TextStyle(
-                              fontSize: 18, color: AppColors.red)),
+                          style: TextStyle(fontSize: 18, color: AppColors.red)),
                       Text("--/-- ",
                           style: TextStyle(
-                              fontSize: 20,
-                              color: AppColors.black54,
-                              )),
+                            fontSize: 20,
+                            color: AppColors.black54,
+                          )),
                     ],
                   )),
                 ],
               ),
             ),
             Container(
-              alignment: Alignment.centerLeft,
-              child:
-            RichText(
-              text: const TextSpan(
-                text: "26",
-                style: TextStyle(color: AppColors.primaryColor , fontSize: 25 ,fontWeight: FontWeight.bold),
-                children: [
-                  TextSpan(
-                    text: "  Oct 2024",
-                    style: TextStyle(
-                      color: AppColors.shadowColorDark,
-                      fontSize: 20,
-
-                    )
-                  )
-                ]
-              ),
-
-            )
-            ),
+                alignment: Alignment.centerLeft,
+                child: RichText(
+                  text: TextSpan(
+                      text: DateTime.now().day.toString(),
+                      style: const TextStyle(
+                          color: AppColors.primaryColor,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold),
+                      children: [
+                        TextSpan(
+                            text:
+                                DateFormat(" MMMM yyyy").format(DateTime.now()),
+                            style: const TextStyle(
+                              color: AppColors.shadowColorDark,
+                              fontSize: 20,
+                            ))
+                      ]),
+                )),
+            StreamBuilder(
+                stream: Stream.periodic(const Duration(seconds: 1)),
+                builder: (context, snapshot) {
+                  return Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      DateFormat("hh:mm:ss a").format(DateTime.now()),
+                      style: const TextStyle(
+                          fontSize: 20,
+                          color: AppColors.black54,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  );
+                }),
             Container(
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                "12:00:01 PM",
-                style: TextStyle(
-                  fontSize: 20,
-                    color: AppColors.black54, fontWeight: FontWeight.bold),
-              ),
+              margin: const EdgeInsets.only(top: 30),
+              child: Builder(builder: (context) {
+                final GlobalKey<SlideActionState> key = GlobalKey();
+                return SlideAction(
+                  text: "Slide To Check Out",
+                  textStyle:
+                      const TextStyle(color: AppColors.black54, fontSize: 18),
+                  outerColor: AppColors.white,
+                  innerColor: AppColors.primaryColor,
+                  key: key,
+                  onSubmit: () async{
+                    print(DateFormat('hh:mm').format(DateTime.now()));
+                    QuerySnapshot snap = await FirebaseFirestore.instance
+                        .collection("Employee")
+                        .where("email" , isEqualTo: User.userName)
+                        .get();
+                    await FirebaseFirestore.instance.collection("Empolyee").doc(snap.docs[0].id).collection("Record")
+                        .doc(DateFormat("dd MMMM yyyy").format(DateTime.now()),).set({
+                      "checkIn":DateFormat("hh:mm:ss a").format(DateTime.now()),
+                    });
+
+                  },
+                );
+              }),
             ),
-            Builder(builder: (context){
-              final GlobalKey<SlideActionState> key = GlobalKey();
-              return SlideAction(
-                text: "Slide To Check Out",
-                textStyle: const TextStyle( color: AppColors.black54 ,fontSize: 18),
-                outerColor: AppColors.white,
-                innerColor: AppColors.primaryColor,
-                key: key,
-                onSubmit: (){},
-              );
-            }),
-
-
           ],
         ),
       ),
