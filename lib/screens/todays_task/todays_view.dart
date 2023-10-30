@@ -157,17 +157,40 @@ class TodayView extends HookView<HomeViewModel> {
                   outerColor: AppColors.white,
                   innerColor: AppColors.primaryColor,
                   key: key,
-                  onSubmit: () async{
+                  onSubmit: ()async {
                     print(DateFormat('hh:mm').format(DateTime.now()));
                     QuerySnapshot snap = await FirebaseFirestore.instance
                         .collection("Employee")
-                        .where("email" , isEqualTo: User.userName)
+                        .where("email")
                         .get();
-                    await FirebaseFirestore.instance.collection("Empolyee").doc(snap.docs[0].id).collection("Record")
-                        .doc(DateFormat("dd MMMM yyyy").format(DateTime.now()),).set({
-                      "checkIn":DateFormat("hh:mm:ss a").format(DateTime.now()),
-                    });
+                    print(snap.docs[0].id);
 
+                    DocumentSnapshot snap2 =await FirebaseFirestore.instance
+                        .doc(snap.docs[0].id)
+                        .collection("Record")
+                        .doc(DateFormat("dd MMMM yyyy").format(DateTime.now())).get();
+                    try{
+                      String checkIn = snap2['checkIn'];
+                      await FirebaseFirestore.instance
+                          .collection("Employee")
+                          .doc(snap.docs[0].id)
+                          .collection("Record")
+                          .doc(DateFormat("dd MMMM yyyy").format(DateTime.now()))
+                          .update({
+                        'checkIn':checkIn,
+                        'checkOut':DateFormat('hh:mm').format(DateTime.now())
+                      });
+
+                    }catch(e)
+                    {
+                      await FirebaseFirestore.instance.collection("Employee")
+                          .doc(snap.docs[0].id)
+                          .collection("Record")
+                          .doc(DateFormat("dd MMMM yyyy").format(DateTime.now()))
+                          .set({
+                        'checkIn':DateFormat('hh:mm').format(DateTime.now())
+                      });
+                    }
                   },
                 );
               }),
