@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pmvvm/mvvm_builder.widget.dart';
 import 'package:pmvvm/views/hook.view.dart';
-import 'package:tracks_admin_app/extentions/padding_ext.dart';
 import 'package:tracks_admin_app/screens/Calendar_Screen/calendar_screen_view_model.dart';
 import 'package:tracks_admin_app/screens/Home/home_view_model.dart';
-
+import 'package:animated_button/animated_button.dart';
+import 'package:tracks_admin_app/utils/app_colors.dart';
+import '../../utils/app_router.dart';
 class CalenderScreen extends StatelessWidget {
   const CalenderScreen({Key? key}) : super(key: key);
   @override
@@ -21,19 +22,48 @@ class CalenderView extends HookView<HomeViewModel> {
 
   @override
   Widget render(context, viewModel) {
-    return Scaffold(
-      body: const Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text("Calender Screen"),
-          ],
-        ),
-      ).setPageHorizontalPadding(context),
+    return SafeArea(
+      child: Scaffold(
+          body: Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+            AnimatedButton(
+              color: AppColors.primaryColor,
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, AppRouter.leadsScreen);
+              },
+              enabled: true,
+              shadowDegree: ShadowDegree.light,
+              child: const Text(
+                'Leads',
+                style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            AnimatedButton(
+              color: AppColors.primaryColor,
+              onPressed: () {},
+              enabled: true,
+              shadowDegree: ShadowDegree.light,
+              child: const Text(
+                'Units',
+                style: TextStyle(
+                  fontSize: 22,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ]))),
     );
   }
 }
- // LogOut Funcation
+// LogOut Funcation
 // MaterialButton(
 // onPressed: () async {
 // final SharedPreferences prefs =

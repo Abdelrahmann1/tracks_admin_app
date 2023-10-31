@@ -7,19 +7,24 @@ import 'package:tracks_admin_app/utils/app_router.dart';
 class SplashScreenViewModel extends ViewModel {
   Future<dynamic> delay() async {
     Future.delayed(const Duration(seconds: 5), () async {});
-     final prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
+
     final String? uidTokenFromUser = prefs.getString('EmployeeEmail');
-    String userName =prefs.getString('EmployeeEmail')!;
-    userName= User.userName;
-    if (uidTokenFromUser == null){
+    if (uidTokenFromUser == null) {
       Navigator.pushReplacementNamed(context, AppRouter.onboardingScreen);
-    }else{
+    } else {
       Navigator.pushReplacementNamed(context, AppRouter.homeScreen);
     }
+  }
+   _getCurrentUSer() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    User.userName = sharedPreferences.getString("EmployeeEmail")!;
+   return print(User.userName);
   }
   @override
   void init() {
     super.init();
+    _getCurrentUSer();
     delay();
   }
 }
