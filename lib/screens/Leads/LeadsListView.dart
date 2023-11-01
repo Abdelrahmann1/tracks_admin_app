@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tracks_admin_app/screens/Leads/LeadsDetail.dart';
 
 import '../Units/app_styles.dart';
 
@@ -24,6 +25,7 @@ class _LeadsWidgetState extends State<LeadsWidget> {
   String filter = "";
   final CollectionReference leadsData =
       FirebaseFirestore.instance.collection("Leads");
+
   @override
   void initState() {
     super.initState();
@@ -258,7 +260,25 @@ class _LeadsWidgetState extends State<LeadsWidget> {
                                                   ),
                                                 ),
                                                 InkWell(
-                                                  onTap: () {},
+                                                  onTap: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) => LeadsDetailsWidget(
+                                                            name: snapshot.data!.docs[index]["name"],
+                                                            phone: snapshot.data!.docs[index]["phoneNumber"],
+                                                            minPrice: snapshot.data!.docs[index]["priceMin"],
+                                                            maxPrice: snapshot.data!.docs[index]["priceMax"],
+                                                            area: snapshot.data!.docs[index]["area"],
+                                                            date: snapshot.data!.docs[index]["date"],
+                                                            status: snapshot.data!.docs[index]["status"],
+                                                            notes: snapshot.data!.docs[index]["notes"],
+                                                            id: snapshot.data!.docs[index].id,
+                                                            address: snapshot.data!.docs[index]["address"]),
+                                                      ),
+                                                    );
+
+                                                  },
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsetsDirectional

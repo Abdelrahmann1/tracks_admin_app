@@ -31,7 +31,7 @@ class CalenderView extends HookView<HomeViewModel> {
             AnimatedButton(
               color: AppColors.primaryColor,
               onPressed: () {
-                Navigator.pushReplacementNamed(context, AppRouter.leadsScreen);
+                Navigator.pushNamed(context, AppRouter.leadsScreen);
               },
               enabled: true,
               shadowDegree: ShadowDegree.light,

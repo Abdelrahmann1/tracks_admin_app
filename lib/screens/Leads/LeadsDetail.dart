@@ -1,9 +1,33 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../widgets/CustomButtons.dart';
+
 class LeadsDetailsWidget extends StatefulWidget {
-  const LeadsDetailsWidget({Key? key}) : super(key: key);
+  final String name;
+  final String phone;
+  final String minPrice;
+  final String maxPrice;
+  final String area;
+  final String date;
+  final String status;
+  final String address;
+  final String notes;
+  final String id;
+
+  const LeadsDetailsWidget({Key? key,
+    required this.name,
+    required this.phone,
+    required this.minPrice,
+    required this.maxPrice,
+    required this.area,
+    required this.date,
+    required this.status,
+    required this.address,
+    required this.notes,
+    required this.id
+  }) : super(key: key);
 
   @override
   _LeadsDetailsWidgetState createState() => _LeadsDetailsWidgetState();
@@ -31,8 +55,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
-      appBar: MediaQuery.sizeOf(context).width <= 991.0
-          ? AppBar(
+      appBar:  AppBar(
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         leading: IconButton(
@@ -58,446 +81,456 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
         actions: [],
         centerTitle: false,
         elevation: 0,
-      )
-          : null,
+      ),
+
       body: SafeArea(
         top: true,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Container(
+                width: double.infinity,
+                constraints: const BoxConstraints(
+                  maxWidth: 1170,
+                ),
+                decoration: const BoxDecoration(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0, 8, 0, 0),
+                      child: Text(
+                        'Lead Details',
+                        style: GoogleFonts.plusJakartaSans(
 
-            Expanded(
-              child: Align(
-                alignment: const AlignmentDirectional(0.00, -1.00),
-                child: Container(
-                  width: double.infinity,
-                  constraints: const BoxConstraints(
-                    maxWidth: 1170,
-                  ),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          constraints: const BoxConstraints(
-                            maxWidth: 1170,
-                          ),
-                          decoration: const BoxDecoration(),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    16, 0, 0, 0),
-                                child: Text(
-                                  'Lead Details',
-                                  style: GoogleFonts.plusJakartaSans(
-
-                                  color: const Color(0xFF15161E),
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    16, 4, 0, 0),
-                                child: Text(
-                                  'Below are the details of your lead.',
-                                  style: GoogleFonts.plusJakartaSans(
-                                  color: const Color(0xFF606A85),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                          color: const Color(0xFF15161E),
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
                         ),
-                        Align(
-                          alignment: const AlignmentDirectional(0.00, -1.00),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-                            child: Container(
-                              width: double.infinity,
-                              constraints: const BoxConstraints(
-                                maxWidth: 1170,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: const Color(0xFFE5E7EB),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    flex: 8,
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          16, 16, 0, 16),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Info',
-                                            style: GoogleFonts.outfit(
-
-                                            color: const Color(0xFF15161E),
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 8, 0, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Name',
-                                                  style: GoogleFonts.plusJakartaSans(
-
-                                                  color:
-                                                    const Color(0xFF606A85),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                    FontWeight.w500,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  'Mostafa Ashraf',
-                                                  style: GoogleFonts.plusJakartaSans(
-
-                                                  color:
-                                                    const Color(0xFF15161E),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                    FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Date',
-                                                  style: GoogleFonts.plusJakartaSans(
-
-                                                  color:
-                                                    const Color(0xFF606A85),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                    FontWeight.normal,
-                                                  ),
-                                                ),
-                                                Text('Fri, Jun 23 - 4:30pm',
-                                                  style: GoogleFonts.plusJakartaSans(
-                                                  color:
-                                                  const Color(0xFF15161E),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                    FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 8, 0, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Min price',
-                                                  style:GoogleFonts.plusJakartaSans(
-
-                                                  color:
-                                                    const Color(0xFF606A85),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                    FontWeight.normal,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  '\$500.00',
-                                                  style: GoogleFonts.plusJakartaSans(
-
-                                                  color:
-                                                    const Color(0xFF15161E),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                    FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 8, 0, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Status',
-                                                  style: GoogleFonts.plusJakartaSans(
-
-                                                  color:
-                                                    const Color(0xFF606A85),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                    FontWeight.normal,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  'Completed',
-                                                  style: GoogleFonts.plusJakartaSans(
-
-                                                  color:
-                                                    const Color(0xFF15161E),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                    FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 8, 0, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Area',
-                                                  style:GoogleFonts.plusJakartaSans(
-
-                                                  color:
-                                                    const Color(0xFF606A85),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                    FontWeight.normal,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  'New cairo',
-                                                  style:GoogleFonts.plusJakartaSans(
-
-                                                  color:
-                                                    const Color(0xFF15161E),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                    FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          const Padding(
-                                            padding: EdgeInsetsDirectional
-                                                .fromSTEB(0, 16, 0, 16),
-                                            child: Divider(
-                                              thickness: 2,
-                                              color: Color(0xFFE5E7EB),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 0, 0, 12),
-                                            child: Text(
-                                              'Contact',
-                                              style:
-                                              GoogleFonts.plusJakartaSans(
-
-                                              color:
-                                                const Color(0xFF15161E),
-                                                fontSize: 16,
-                                                fontWeight:
-                                                FontWeight.w600,
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 8, 0, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'phone number',
-                                                  style: GoogleFonts.plusJakartaSans(
-
-                                                  color:
-                                                    const Color(0xFF606A85),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                    FontWeight.normal,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  '01282160015',
-                                                  style: GoogleFonts.plusJakartaSans(
-
-                                                  color:
-                                                    const Color(0xFF15161E),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                    FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 8, 0, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'address',
-                                                  style: GoogleFonts.plusJakartaSans(
-
-                                                  color:
-                                                    const Color(0xFF606A85),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                    FontWeight.normal,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  'Hay el awel, Nasr city',
-                                                  style: GoogleFonts.plusJakartaSans(
-                                                  color:
-                                                    const Color(0xFF15161E),
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                    FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 8, 0, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Max price',
-                                                  style: GoogleFonts.plusJakartaSans(
-
-                                                  color:
-                                                    const Color(0xFF606A85),
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                    FontWeight.w500,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  '\$500.00',
-                                                  style: GoogleFonts.outfit(
-
-                                                  color:
-                                                    const Color(0xFF15161E),
-                                                    fontSize: 22,
-                                                    fontWeight:
-                                                    FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          const Padding(
-                                            padding: EdgeInsetsDirectional
-                                                .fromSTEB(0, 16, 0, 16),
-                                            child: Divider(
-                                              thickness: 2,
-                                              color: Color(0xFFE5E7EB),
-                                            ),
-                                          ),
-                                          Text(
-                                            'Notes',
-                                            style: GoogleFonts.plusJakartaSans(
-
-                                            color: const Color(0xFF606A85),
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 8, 0, 0),
-                                            child: Text(
-                                              'Transaction for monthly subscription.',
-                                              style:
-                                              GoogleFonts.plusJakartaSans(
-
-                                                color:
-                                                const Color(0xFF15161E),
-                                                fontSize: 16,
-                                                fontWeight:
-                                                FontWeight.w600,
-                                              ),
-                                            ),
-                                          ),
-
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0, 4, 0, 0),
+                      child: Text(
+                        'Below are the details of your lead.',
+                        style: GoogleFonts.plusJakartaSans(
+                          color: const Color(0xFF606A85),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 10,),
+              Align(
+                alignment: AlignmentDirectional.bottomStart,
+                child: Text(
+                'Info',
+                style: GoogleFonts.outfit(
+
+                  color: const Color(0xFF15161E),
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),),
+              Padding(
+                padding: const EdgeInsetsDirectional
+                    .fromSTEB(0, 8, 0, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment:
+                  MainAxisAlignment
+                      .spaceBetween,
+                  children: [
+                    Text(
+                      'Name',
+                      style: GoogleFonts.plusJakartaSans(
+
+                        color:
+                        const Color(0xFF606A85),
+                        fontSize: 14,
+                        fontWeight:
+                        FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      widget.name,
+                      style: GoogleFonts.plusJakartaSans(
+
+                        color:
+                        const Color(0xFF15161E),
+                        fontSize: 14,
+                        fontWeight:
+                        FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment:
+                  MainAxisAlignment
+                      .spaceBetween,
+                  children: [
+                    Text(
+                      'Date',
+                      style: GoogleFonts.plusJakartaSans(
+
+                        color:
+                        const Color(0xFF606A85),
+                        fontSize: 14,
+                        fontWeight:
+                        FontWeight.normal,
+                      ),
+                    ),
+                    Text(widget.date,
+                      style: GoogleFonts.plusJakartaSans(
+                        color:
+                        const Color(0xFF15161E),
+                        fontSize: 14,
+                        fontWeight:
+                        FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional
+                    .fromSTEB(0, 8, 0, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment:
+                  MainAxisAlignment
+                      .spaceBetween,
+                  children: [
+                    Text(
+                      'Min price',
+                      style:GoogleFonts.plusJakartaSans(
+
+                        color:
+                        const Color(0xFF606A85),
+                        fontSize: 14,
+                        fontWeight:
+                        FontWeight.normal,
+                      ),
+                    ),
+                    Text(
+                      '${widget.maxPrice} LE',
+                      style: GoogleFonts.plusJakartaSans(
+
+                        color:
+                        const Color(0xFF15161E),
+                        fontSize: 14,
+                        fontWeight:
+                        FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional
+                    .fromSTEB(0, 8, 0, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment:
+                  MainAxisAlignment
+                      .spaceBetween,
+                  children: [
+                    Text(
+                      'Status',
+                      style: GoogleFonts.plusJakartaSans(
+
+                        color:
+                        const Color(0xFF606A85),
+                        fontSize: 14,
+                        fontWeight:
+                        FontWeight.normal,
+                      ),
+                    ),
+                    Text(
+                      widget.status,
+                      style: GoogleFonts.plusJakartaSans(
+
+                        color:
+                        const Color(0xFF15161E),
+                        fontSize: 14,
+                        fontWeight:
+                        FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(padding: const EdgeInsetsDirectional
+                  .fromSTEB(0, 8, 0, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment:
+                  MainAxisAlignment
+                      .spaceBetween,
+                  children: [
+                    Text(
+                      'Area',
+                      style:GoogleFonts.plusJakartaSans(
+
+                        color:
+                        const Color(0xFF606A85),
+                        fontSize: 14,
+                        fontWeight:
+                        FontWeight.normal,
+                      ),
+                    ),
+                    Text(
+                      widget.area,
+                      style:GoogleFonts.plusJakartaSans(
+
+                        color:
+                        const Color(0xFF15161E),
+                        fontSize: 14,
+                        fontWeight:
+                        FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsetsDirectional
+                    .fromSTEB(0, 16, 0, 16),
+                child: Divider(
+                  thickness: 2,
+                  color: Color(0xFFE5E7EB),
+                ),
+              ),
+              Align(
+               alignment: AlignmentDirectional.bottomStart,
+                child: Text(
+                  'Contact',
+                  style:
+                  GoogleFonts.plusJakartaSans(
+
+                    color:
+                    const Color(0xFF15161E),
+                    fontSize: 16,
+                    fontWeight:
+                    FontWeight.w600,
                   ),
                 ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsetsDirectional
+                    .fromSTEB(0, 8, 0, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment:
+                  MainAxisAlignment
+                      .spaceBetween,
+                  children: [
+                    Text(
+                      'phone number',
+                      style: GoogleFonts.plusJakartaSans(
+
+                        color:
+                        const Color(0xFF606A85),
+                        fontSize: 14,
+                        fontWeight:
+                        FontWeight.normal,
+                      ),
+                    ),
+                    Text(
+                      widget.phone,
+                      style: GoogleFonts.plusJakartaSans(
+
+                        color:
+                        const Color(0xFF15161E),
+                        fontSize: 14,
+                        fontWeight:
+                        FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional
+                    .fromSTEB(0, 8, 0, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment:
+                  MainAxisAlignment
+                      .spaceBetween,
+                  children: [
+                    Text(
+                      'address',
+                      style: GoogleFonts.plusJakartaSans(
+
+                        color:
+                        const Color(0xFF606A85),
+                        fontSize: 14,
+                        fontWeight:
+                        FontWeight.normal,
+                      ),
+                    ),
+                    Text(
+                      widget.address,
+                      style: GoogleFonts.plusJakartaSans(
+                        color:
+                        const Color(0xFF15161E),
+                        fontSize: 14,
+                        fontWeight:
+                        FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional
+                    .fromSTEB(0, 8, 0, 0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Max price',
+                      style: GoogleFonts.plusJakartaSans(
+
+                        color:
+                        const Color(0xFF606A85),
+                        fontSize: 16,
+                        fontWeight:
+                        FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      '${widget.maxPrice} LE',
+                      style: GoogleFonts.outfit(
+
+                        color:
+                        const Color(0xFF15161E),
+                        fontSize: 22,
+                        fontWeight:
+                        FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsetsDirectional
+                    .fromSTEB(0, 16, 0, 16),
+                child: Divider(
+                  thickness: 2,
+                  color: Color(0xFFE5E7EB),
+                ),
+              ),
+              SizedBox(height: 15,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CustomButton(0xffe9be1e, 'Add Note'),
+                  CustomButton(0xffe9be1e, 'Change Status'),
+                ],
+              ),
+              SizedBox(height: 15,),
+              Text(
+                'Notes',
+                style: GoogleFonts.plusJakartaSans(
+
+                  color: const Color(0xFF606A85),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional
+                    .fromSTEB(10, 8, 0, 0),
+                child: Text(
+                  widget.notes,
+                  style:
+                  GoogleFonts.plusJakartaSans(
+
+                    color:
+                    const Color(0xFF15161E),
+                    fontSize: 16,
+                    fontWeight:
+                    FontWeight.w600,
+                  ),
+                ),
+              ),
+              Container(
+                width: 400,
+                  height: 200,
+                  child:  StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('Leads')
+                        .doc(widget.id)
+                        .collection('FollowUp')
+                        .snapshots(),
+                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snap) {
+                      if (snap.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      }
+
+                      if (snap.hasError) {
+                        return Text('Error: ${snap.error}');
+                      }
+
+                      if (!snap.hasData || snap.data!.docs.isEmpty) {
+                        return Text('No follow-ups found.');
+                      }
+
+                      return ListView.builder(
+                        itemCount: snap.data!.docs.length,
+                        itemBuilder: (context, index) {
+                          DocumentSnapshot document = snap.data!.docs[index];
+                          Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+
+                          return StreamBuilder<DocumentSnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('Actions')
+                                .doc(document["actionID"])
+                                .snapshots(),
+                            builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
+                              var docData = snapshot.data!;
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              }
+
+                              if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              }
+
+                              if (!snapshot.hasData) {
+                                return Text('No follow-ups found.');
+                              }
+
+                              return Container(child: Text(docData["type"]),
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                  ))
+
+            ],
+          ),),
         ),
       ),
     );
