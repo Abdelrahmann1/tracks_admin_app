@@ -16,16 +16,21 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-class ProfileView extends HookView<HomeViewModel> {
+class ProfileView extends HookView<ProfileViewModel> {
   const ProfileView({Key? key, reactive = true});
 
   @override
   Widget render(context, viewModel) {
     return  Scaffold(
-      body:  const Center(
-      child: Text("Profile Screen")
-      ).setPageHorizontalPadding(context),
+      body:
+      Center(
+        child: ElevatedButton(
+          onPressed: () {
+            viewModel.signOut();
+          },
+          child: Text('Log Out'),
+        ),
+      ).setPageHorizontalPadding(context));
 
-    );
   }
 }

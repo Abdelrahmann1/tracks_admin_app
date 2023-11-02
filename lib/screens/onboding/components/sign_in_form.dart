@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rive/rive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tracks_admin_app/utils/app_colors.dart';
@@ -132,7 +134,7 @@ class _SignInFormState extends State<SignInForm> {
                   child: ElevatedButton.icon(
                       onPressed: () async {
                         FocusScope.of(context).unfocus();
-                        logIn();
+                        signInWithEmailAndPassword();
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primaryColor,
@@ -183,15 +185,106 @@ class _SignInFormState extends State<SignInForm> {
     );
   }
 
+  String failureMassage = '';
+  bool loading = false;
+  bool? isLogin = false;
+  signInWithEmailAndPassword() async {
+    setState(() {
+      isLogin = true;
+    });
+    try {
+      String email = emailController.text;
+      String password = passwordController.text;
+      UserCredential userCredential = await FirebaseAuth.instance
+      .signInWithEmailAndPassword(email: email, password: password);
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('uidToken', userCredential.user!.uid);
+
+      print(userCredential.user!.uid);
+      Navigator.pushNamedAndRemoveUntil(context, AppRouter.homeScreen, (Route<dynamic> route) => false);
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "user-not-found":
+          failureMassage = "user-not-found";
+          break;
+        case "invalid-email":
+          failureMassage = "invalid-email";
+          break;
+        case "wrong-password":
+          failureMassage = "wrong-password";
+          break;
+      }
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              backgroundColor: AppColors.white,
+              title: const Center(
+                  child: Text(
+                "There Is A Problem",
+                style: TextStyle(fontSize: 18),
+              )),
+              content: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    failureMassage,
+                    style: const TextStyle(color: AppColors.primaryColor),
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
+                          child: Container(
+                            height: 32,
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryColor,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            alignment: AlignmentDirectional(0.00, 0.00),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                              child: Text(
+                                'ok',
+                                style: GoogleFonts.plusJakartaSans(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                         // Text("ok" ,style: TextStyle(color: Colors.black ,fontSize: 20),),
+                      ],
+                    ))
+              ],
+            );
+          });
+    } finally {
+      setState(() {
+        isLogin = false;
+      });
+    }
+  }
+
   logIn() async {
-    String email = emailController.text.toString();
-    String password = passwordController.text.toString();
+    String email = emailController.text;
+    String password = passwordController.text;
     if (email.isEmpty) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("You Shuold Enter Email")));
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("You Shuold Enter Email")));
     } else if (password.isEmpty) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("You Shuold Enter Password")));
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("You Shuold Enter Password")));
     } else {
       QuerySnapshot snap = await FirebaseFirestore.instance
           .collection("Employee")
@@ -200,8 +293,7 @@ class _SignInFormState extends State<SignInForm> {
       try {
         if (password == snap.docs[0]['password']) {
           sharedPreferences = await SharedPreferences.getInstance();
-          sharedPreferences
-              .setString("EmployeeEmail", email.toString())
+          sharedPreferences.setString("EmployeeEmail", email.toString())
               .then((_) {
             Navigator.pushNamed(context, AppRouter.homeScreen);
           });

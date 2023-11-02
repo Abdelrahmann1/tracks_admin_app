@@ -39,7 +39,6 @@ dependencies:
   flutter_svg: ^1.1.6
   cloud_firestore: ^4.11.0
   firebase_storage: ^11.3.1
-  firebase_auth: ^4.11.1
   firebase_core: ^2.19.0
   shared_preferences: ^2.2.2
   pmvvm: ^2.3.0
@@ -48,6 +47,8 @@ dependencies:
   intl: ^0.18.1
   google_fonts: ^4.0.4
   animated_button: ^0.2.0
+  month_year_picker: ^0.3.0+1
+  firebase_auth: ^4.12.1
 
 dev_dependencies:
   flutter_test:

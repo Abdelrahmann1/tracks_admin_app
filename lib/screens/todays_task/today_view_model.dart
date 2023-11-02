@@ -13,14 +13,14 @@ class TodayTaskViewModel extends ViewModel {
   Future<dynamic> getName() async {
     final prefs = await SharedPreferences.getInstance();
     String? name = prefs.getString('EmployeeEmail');
-    User.userName = name!;
+    Users.userName = name!;
     notifyListeners();
   }
   void getRecord() async {
     try {
       QuerySnapshot snap = await FirebaseFirestore.instance
           .collection("Employee")
-          .where("email", isEqualTo: User.userName)
+          .where("email", isEqualTo: Users.userName)
           .get();
       DocumentSnapshot snap2 = await FirebaseFirestore.instance
           .collection("Employee")
