@@ -145,7 +145,8 @@ class _LeadsWidgetState extends State<LeadsWidget> {
               ),
             ),
             Expanded(
-              child: FutureBuilder(
+              child:
+              FutureBuilder(
                   future: leadsData.get(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {

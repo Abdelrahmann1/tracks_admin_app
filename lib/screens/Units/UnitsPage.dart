@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -12,6 +13,8 @@ class UnitsHomePage extends StatefulWidget {
 }
 
 class _UnitsHomePage extends State<UnitsHomePage> {
+  final CollectionReference unitsData =
+      FirebaseFirestore.instance.collection("Units");
   List<String> categories = [
     "House",
     "Apartment",
@@ -41,20 +44,13 @@ class _UnitsHomePage extends State<UnitsHomePage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Location',
-                          style: kRalewayRegular.copyWith(
-                            color: kGrey83,
-                            fontSize: SizeConfig.blockSizeHorizontal! * 2.5,
-                          ),
-                        ),
                         SizedBox(
                           height: SizeConfig.blockSizeVertical! * 0.5,
                         ),
                         Row(
                           children: [
                             Text(
-                              'Jakarta',
+                              'LEADS',
                               style: kRalewayMedium.copyWith(
                                 color: kBlack,
                                 fontSize: SizeConfig.blockSizeHorizontal! * 5,
@@ -207,7 +203,7 @@ class _UnitsHomePage extends State<UnitsHomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Near from you',
+                      'All  Leads',
                       style: kRalewayMedium.copyWith(
                         color: kBlack,
                         fontSize: SizeConfig.blockSizeHorizontal! * 4,
@@ -228,147 +224,173 @@ class _UnitsHomePage extends State<UnitsHomePage> {
               ),
               SizedBox(
                 height: 272,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: (() {
-
-                      }
-                      ),
-                      child: Container(
-                        height: 272,
-                        width: 222,
-                        margin: EdgeInsets.only(
-                          left: kPadding20,
-                          right: index == 5 - 1 ? kPadding20 : 0,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            kBorderRadius20,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              spreadRadius: 0,
-                              offset: const Offset(0, 18),
-                              blurRadius: 18,
-                              color: kBlack.withOpacity(0.1),
-                            )
-                          ],
-                          image: const DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                              'https://mod-movers.com/wp-content/uploads/2020/06/webaliser-_TPTXZd9mOo-unsplash-scaled-e1591134904605.jpg',
-                            ),
-                          ),
-                        ),
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                height: 136,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
-                                    bottomLeft:
-                                        Radius.circular(kBorderRadius20),
-                                    bottomRight:
-                                        Radius.circular(kBorderRadius20),
+                child: FutureBuilder(
+                    future: unitsData.get(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.data!.docs.isNotEmpty) {
+                          return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: (() {}),
+                                child: Container(
+                                  height: 272,
+                                  width: 222,
+                                  margin: EdgeInsets.only(
+                                    left: kPadding20,
+                                    right: index == 5 - 1 ? kPadding20 : 0,
                                   ),
-                                  gradient: kLinearGradientBlack,
-                                ),
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: kPadding16,
-                                  vertical: kPadding20,
-                                ),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                      kBorderRadius20,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        spreadRadius: 0,
+                                        offset: const Offset(0, 18),
+                                        blurRadius: 18,
+                                        color: kBlack.withOpacity(0.1),
+                                      )
+                                    ],
+                                    image: const DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(
+                                        'https://mod-movers.com/wp-content/uploads/2020/06/webaliser-_TPTXZd9mOo-unsplash-scaled-e1591134904605.jpg',
+                                      ),
+                                    ),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: Container(
+                                          height: 136,
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              kBorderRadius20,
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              bottomLeft: Radius.circular(
+                                                  kBorderRadius20),
+                                              bottomRight: Radius.circular(
+                                                  kBorderRadius20),
                                             ),
-                                            color: kBlack.withOpacity(
-                                              0.24,
-                                            ),
+                                            gradient: kLinearGradientBlack,
                                           ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Padding(
                                           padding: const EdgeInsets.symmetric(
-                                            horizontal: kPadding8,
-                                            vertical: kPadding4,
+                                            horizontal: kPadding16,
+                                            vertical: kPadding20,
                                           ),
-                                          child: Row(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              SvgPicture.asset(
-                                                'assets/icon_pinpoint.svg',
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                        kBorderRadius20,
+                                                      ),
+                                                      color: kBlack.withOpacity(
+                                                        0.24,
+                                                      ),
+                                                    ),
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                      horizontal: kPadding8,
+                                                      vertical: kPadding4,
+                                                    ),
+                                                    child: Row(
+                                                      children: [
+                                                        SvgPicture.asset(
+                                                          'assets/icon_pinpoint.svg',
+                                                        ),
+                                                        const SizedBox(
+                                                          width: kPadding4,
+                                                        ),
+                                                        Text(
+                                                          snapshot
+                                                              .data!
+                                                              .docs[index]
+                                                                  ["dateOfPost"]
+                                                              .toString(),
+                                                          style: kRalewayRegular
+                                                              .copyWith(
+                                                            color: kWhite,
+                                                            fontSize: SizeConfig
+                                                                    .blockSizeHorizontal! *
+                                                                3.5,
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
                                               ),
-                                              const SizedBox(
-                                                width: kPadding4,
-                                              ),
-                                              Text(
-                                                '1.8 km',
-                                                style: kRalewayRegular.copyWith(
-                                                  color: kWhite,
-                                                  fontSize: SizeConfig
-                                                          .blockSizeHorizontal! *
-                                                      2.5,
-                                                ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    snapshot.data!
+                                                        .docs[index]["name"]
+                                                        .toString(),
+                                                    style:
+                                                        kRalewayMedium.copyWith(
+                                                      color: kWhite,
+                                                      fontSize: SizeConfig
+                                                              .blockSizeHorizontal! *
+                                                          4,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: SizeConfig
+                                                            .blockSizeVertical! *
+                                                        0.5,
+                                                  ),
+                                                  Text(
+                                                    snapshot.data!
+                                                        .docs[index]["area"]
+                                                        .toString(),
+                                                    style: kRalewayRegular
+                                                        .copyWith(
+                                                      color: kWhite,
+                                                      fontSize: SizeConfig
+                                                              .blockSizeHorizontal! *
+                                                          3.5,
+                                                    ),
+                                                  )
+                                                ],
                                               )
                                             ],
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Dreamsville House',
-                                          style: kRalewayMedium.copyWith(
-                                            color: kWhite,
-                                            fontSize: SizeConfig
-                                                    .blockSizeHorizontal! *
-                                                4,
-                                          ),
                                         ),
-                                        SizedBox(
-                                          height:
-                                              SizeConfig.blockSizeVertical! *
-                                                  0.5,
-                                        ),
-                                        Text(
-                                          'Jl. Sultan Iskandar Muda',
-                                          style: kRalewayRegular.copyWith(
-                                            color: kWhite,
-                                            fontSize: SizeConfig
-                                                    .blockSizeHorizontal! *
-                                                2.5,
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  ],
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                              );
+                            },
+                          );
+                        } else {
+                          return const Center(child: Text("No data"));
+                        }
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    }),
               ),
               const SizedBox(
                 height: kPadding24,

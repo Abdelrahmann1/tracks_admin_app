@@ -22,6 +22,17 @@ class _AddLeadNoteState extends State<AddLeadNote> {
   TextEditingController addDescController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   PublicController publicController = Get.put((PublicController()));
+  Future<void> addSelectedValueToFirestore(String selectedValue) async {
+    final collectionReference = FirebaseFirestore.instance.collection('selectedValues');
+    try {
+      await collectionReference.add({
+        'value': selectedValue,
+      });
+      print('Selected value added to Firestore');
+    } catch (e) {
+      print('Error adding selected value to Firestore: $e');
+    }
+  }
 
   // Initial Selected Value
   String dropdownvalue = 'New';
@@ -211,6 +222,8 @@ class _AddLeadNoteState extends State<AddLeadNote> {
                         onChanged: (String? newValue) {
                           setState(() {
                             dropdownvalue = newValue!;
+                            addSelectedValueToFirestore(newValue!); // Save the selected value to Firestore
+
                           });
                         },
                       ),
@@ -226,7 +239,7 @@ class _AddLeadNoteState extends State<AddLeadNote> {
                       final endDate = '';
                       final location = '';
                       final startDate = DateTime.now().toString();
-                      final pID = '';
+                      final pID = widget.id;
                       final status = dropdownvalue;
                       final type = "FollowUp";
                       final userID = publicController.uid;

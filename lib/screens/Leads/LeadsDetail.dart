@@ -2,11 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tracks_admin_app/utils/app_colors.dart';
-import 'package:tracks_admin_app/utils/app_router.dart';
-
-import '../../widgets/CustomButtons.dart';
 import 'add_lead_note.dart';
-
 class LeadsDetailsWidget extends StatefulWidget {
   final String name;
   final String phone;
@@ -370,24 +366,24 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-
-                    MaterialButton(onPressed: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AddLeadNote(
-                              status: widget.status,
-                              id: widget.id,
-                        ),
-                      ));
-                      //Navigator.pushNamed(context, AppRouter.addLeadNote);
-                    } ,
+                    MaterialButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddLeadNote(
+                                status: widget.status,
+                                id: widget.id,
+                              ),
+                            ));
+                        //Navigator.pushNamed(context, AppRouter.addLeadNote);
+                      },
                       color: AppColors.primaryColor,
-                      child: Text("Add Note" ,
+                      child: Text(
+                        "Add Note",
                         style: TextStyle(color: AppColors.white),
                       ),
                     )
-                 
                   ],
                 ),
                 const SizedBox(
@@ -436,7 +432,8 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                           itemCount: snap.data!.docs.length,
                           itemBuilder: (context, index) {
                             DocumentSnapshot document = snap.data!.docs[index];
-                            Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+                            Map<String, dynamic> data =
+                                document.data() as Map<String, dynamic>;
                             return StreamBuilder<DocumentSnapshot>(
                               stream: FirebaseFirestore.instance
                                   .collection('Actions')
@@ -459,122 +456,138 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                 }
 
                                 return // Generated code for this primaryContent Widget...
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
-                                    child: Container(
-
-                                        width: double.infinity,
-                                        constraints: const BoxConstraints(
-                                          maxWidth: 1170,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(12),
-                                          border: Border.all(
-                                            color: Color(0xFFE5E7EB),
-                                          ),
-                                        ),
-
-                                      child: Expanded(
-                                        flex: 8,
-                                        child: Padding(
-                                          padding: EdgeInsetsDirectional.fromSTEB(16, 16, 0, 16),
-                                          child: Column(
-
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Lead Details',
-                                                style:  GoogleFonts.outfit(
-                                                  color: Color(0xFF15161E),
-                                                  fontSize: 24,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
+                                    Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Container(
+                                    width: double.infinity,
+                                    constraints: const BoxConstraints(
+                                      maxWidth: 1170,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: Color(0xFFE5E7EB),
+                                      ),
+                                    ),
+                                    child: Expanded(
+                                      flex: 8,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16, 16, 0, 16),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Lead Details',
+                                              style: GoogleFonts.outfit(
+                                                color: Color(0xFF15161E),
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.w500,
                                               ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional.fromSTEB(0, 8, 10, 0),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      'Name : ',
-                                                      style:  GoogleFonts.plusJakartaSans(
-                                                        color: Color(0xFF606A85),
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.w500,
-                                                      ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 8, 10, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'Name : ',
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(
+                                                      color: Color(0xFF606A85),
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
-                                                    Text(
-                                                      docData["name"],
-                                                      style: GoogleFonts.plusJakartaSans(
-                                                        color: Color(0xFF15161E),
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.w500,
-                                                      ),
+                                                  ),
+                                                  Text(
+                                                    docData["name"],
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(
+                                                      color: Color(0xFF15161E),
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
                                               ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional.fromSTEB(0, 8, 10, 0),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      'Status Of Lead : ',
-                                                      style:  GoogleFonts.plusJakartaSans(
-                                                        color: Color(0xFF606A85),
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.normal,
-                                                      ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 8, 10, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'Status Of Lead : ',
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(
+                                                      color: Color(0xFF606A85),
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.normal,
                                                     ),
-                                                    Text(
-                                                      docData["status"],
-                                                      style:  GoogleFonts.plusJakartaSans(
-                                                        color: Color(0xFF15161E),
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.w500,
-                                                      ),
+                                                  ),
+                                                  Text(
+                                                    docData["status"],
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(
+                                                      color: Color(0xFF15161E),
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
                                               ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional.fromSTEB(0, 8, 10, 0),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      'Type Of Lead  : ',
-                                                      style: GoogleFonts.plusJakartaSans(
-                                                        color: Color(0xFF606A85),
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.normal,
-                                                      ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 8, 10, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'Type Of Lead  : ',
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(
+                                                      color: Color(0xFF606A85),
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.normal,
                                                     ),
-                                                    Text(
-                                                      docData["type"],
-                                                      style:  GoogleFonts.plusJakartaSans(
-                                                        color: Color(0xFF15161E),
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.w500,
-                                                      ),
+                                                  ),
+                                                  Text(
+                                                    docData["type"],
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(
+                                                      color: Color(0xFF15161E),
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
                                               ),
-
-
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
-                                  );
-
-
+                                  ),
+                                );
                               },
                             );
                           },
@@ -589,107 +602,3 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
     );
   }
 }
-//
-// Padding(
-// padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 12),
-// child: Container(
-// width: double.infinity,
-// constraints: const BoxConstraints(
-// maxWidth: 570,
-// ),
-// decoration: BoxDecoration(
-// color: Colors.white,
-// borderRadius: BorderRadius.circular(8),
-// border: Border.all(
-// color: const Color(0xFFF1F4F8),
-// width: 2,
-// ),
-// ),
-// child: Column(
-// children: [
-// Row(
-// mainAxisSize: MainAxisSize.max,
-// mainAxisAlignment: MainAxisAlignment.spaceBetween,
-// children: [
-// Column(
-// mainAxisSize: MainAxisSize.max,
-// mainAxisAlignment: MainAxisAlignment.center,
-// crossAxisAlignment: CrossAxisAlignment.start,
-// children: [
-// Row(
-// children: [
-// Text(
-// "Name : "
-// ,
-// style:GoogleFonts.plusJakartaSans(
-// color: Color(0xFF101213),
-// fontSize: 14,
-// fontWeight: FontWeight.w500,
-// ),
-// ),
-// Text(
-// docData["name"]
-// ,
-// style:GoogleFonts.plusJakartaSans(
-// color: Color(0xFF101213),
-// fontSize: 16,
-// fontWeight: FontWeight.bold,
-// ),
-// ),
-// ],
-// ),
-// Row(
-// children: [
-// Text(
-// " Status Of Lead : ",
-// style:GoogleFonts.plusJakartaSans(
-// color: const Color(0xFF57636C),
-// fontSize: 14,
-// fontWeight: FontWeight.w500,
-// ),
-// ),
-// Text(
-// docData["status"],
-// style:GoogleFonts.plusJakartaSans(
-// color: const Color(0xFF101213),
-// fontSize: 14,
-// fontWeight: FontWeight.bold,
-// ),
-// ),
-// ],
-// ),
-// ],
-// ),
-//
-//
-// ],
-// ),
-// Row(
-// children: [
-// Text(
-// "Type Of Lead :   ",
-// textAlign: TextAlign.end,
-// style:GoogleFonts.plusJakartaSans(
-// color: Color(0xFF101213),
-// fontSize: 14,
-// fontWeight: FontWeight.w500,
-// ),
-// ),
-// Text(
-// docData["type"]
-//     .toString(),
-// textAlign: TextAlign.end,
-// style:GoogleFonts.plusJakartaSans(
-// color: const Color(0xFF101213),
-// fontSize: 16,
-// fontWeight: FontWeight.bold,
-// ),
-// ),
-// ],
-// ),
-// const Text("Description :"),
-// Text(  docData["description"])
-// ],
-// ),
-// ),
-// );

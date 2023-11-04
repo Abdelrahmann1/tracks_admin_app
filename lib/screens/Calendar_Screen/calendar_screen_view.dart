@@ -47,7 +47,10 @@ class CalenderView extends HookView<HomeViewModel> {
             const SizedBox(height: 20),
             AnimatedButton(
               color: AppColors.primaryColor,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, AppRouter.unitesScreen);
+
+              },
               enabled: true,
               shadowDegree: ShadowDegree.light,
               child: const Text(

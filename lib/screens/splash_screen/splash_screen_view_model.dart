@@ -1,19 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:pmvvm/pmvvm.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tracks_admin_app/controller/puplic.dart';
 import 'package:tracks_admin_app/models/user_model.dart';
 import 'package:tracks_admin_app/utils/app_router.dart';
 
 class SplashScreenViewModel extends ViewModel {
   Future<dynamic> delay() async {
+    PublicController publicController = Get.put((PublicController()));
     Future.delayed(const Duration(seconds: 3), () async {});
     final prefs = await SharedPreferences.getInstance();
     final String? uidTokenFromUser = prefs.getString('uidToken');
     if (uidTokenFromUser == null) {
       Navigator.pushReplacementNamed(context, AppRouter.onboardingScreen);
     } else {
+      publicController.uid = uidTokenFromUser;
       Navigator.pushReplacementNamed(context, AppRouter.homeScreen);
     }
   }
@@ -47,6 +52,7 @@ class SplashScreenViewModel extends ViewModel {
       }
     });
   }
+  PublicController publicController = Get.put((PublicController()));
 
 
   @override
@@ -55,5 +61,7 @@ class SplashScreenViewModel extends ViewModel {
     checkAuth();
     delay();
     getUserInfo();
+    print(publicController.uid);
+
   }
 }
