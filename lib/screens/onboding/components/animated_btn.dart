@@ -24,25 +24,6 @@ class AnimatedBtn extends StatelessWidget {
             borderRadius: BorderRadius.circular(25)
           ),
           child: const Text("Start Now",style: TextStyle(fontWeight: FontWeight.w600 ,fontSize: 20),)
-        // Stack(children: [
-        //   RiveAnimation.asset(
-        //     "assets/RiveAssets/button.riv",
-        //     controllers: [_btnAnimationController],
-        //   ),
-        //   const Positioned.fill(
-        //       top: 8,
-        //       child: Row(
-        //         mainAxisAlignment: MainAxisAlignment.center,
-        //         children: [
-        //           Icon(CupertinoIcons.arrow_right),
-        //           SizedBox(
-        //             width: 8,
-        //           ),
-        //           Text("Start now",
-        //               style: TextStyle(fontWeight: FontWeight.w600)),
-        //         ],
-        //       )),
-        // ]),
       ),
     ));
   }

@@ -188,6 +188,7 @@ class _SignInFormState extends State<SignInForm> {
   String failureMassage = '';
   bool loading = false;
   bool? isLogin = false;
+
   signInWithEmailAndPassword() async {
     setState(() {
       isLogin = true;
@@ -199,8 +200,6 @@ class _SignInFormState extends State<SignInForm> {
       .signInWithEmailAndPassword(email: email, password: password);
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('uidToken', userCredential.user!.uid);
-
-      print(userCredential.user!.uid);
       Navigator.pushNamedAndRemoveUntil(context, AppRouter.homeScreen, (Route<dynamic> route) => false);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -341,4 +340,6 @@ class CustomPositioned extends StatelessWidget {
       ),
     );
   }
+
+
 }

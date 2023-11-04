@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tracks_admin_app/models/user_model.dart';
 import 'package:tracks_admin_app/utils/app_router.dart';
 
-
 class SplashScreenViewModel extends ViewModel {
   Future<dynamic> delay() async {
     Future.delayed(const Duration(seconds: 3), () async {});
@@ -30,12 +29,15 @@ class SplashScreenViewModel extends ViewModel {
         Users.userName = email;
         print(Users.userName);
       } else {
+        Users.userName = "Emp";
+
         print("User email is null");
       }
     } else {
       print("User is not authenticated");
     }
   }
+
   checkAuth() {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
@@ -45,6 +47,8 @@ class SplashScreenViewModel extends ViewModel {
       }
     });
   }
+
+
   @override
   void init() {
     super.init();
