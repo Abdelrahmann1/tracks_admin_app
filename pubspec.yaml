@@ -49,6 +49,7 @@ dependencies:
   animated_button: ^0.2.0
   month_year_picker: ^0.3.0+1
   firebase_auth: ^4.12.1
+  get:
 
 dev_dependencies:
   flutter_test:

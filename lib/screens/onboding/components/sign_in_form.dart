@@ -3,11 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rive/rive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tracks_admin_app/utils/app_colors.dart';
 import 'package:tracks_admin_app/utils/app_router.dart';
+
+import '../../../controller/puplic.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({
@@ -32,6 +35,8 @@ class _SignInFormState extends State<SignInForm> {
   late SMITrigger reset;
 
   late SMITrigger confetti;
+
+  PublicController publicController = Get.put((PublicController()));
 
   StateMachineController getRiveController(Artboard artboard) {
     StateMachineController? controller =
@@ -194,12 +199,14 @@ class _SignInFormState extends State<SignInForm> {
       isLogin = true;
     });
     try {
+
       String email = emailController.text;
       String password = passwordController.text;
       UserCredential userCredential = await FirebaseAuth.instance
       .signInWithEmailAndPassword(email: email, password: password);
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('uidToken', userCredential.user!.uid);
+      publicController.uid = userCredential.user!.uid;
       Navigator.pushNamedAndRemoveUntil(context, AppRouter.homeScreen, (Route<dynamic> route) => false);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {

@@ -1,8 +1,12 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tracks_admin_app/extentions/padding_ext.dart';
 import 'package:tracks_admin_app/utils/app_colors.dart';
+
+import '../../controller/puplic.dart';
 
 class AddLeadNote extends StatefulWidget {
   final String status;
@@ -17,17 +21,20 @@ class _AddLeadNoteState extends State<AddLeadNote> {
   TextEditingController addNoteController = TextEditingController();
   TextEditingController addDescController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  PublicController publicController = Get.put((PublicController()));
 
   // Initial Selected Value
-  String dropdownvalue = 'Fresh Lead';
+  String dropdownvalue = 'New';
 
   // List of items in our dropdown menu
   var items = [
-    'Fresh Lead',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
+    'New',
+    'Contacted',
+    'Unqualified',
+    'Interested',
+    'Negotiation',
+    'Trash',
+    'Done',
   ];
   @override
   Widget build(BuildContext context) {
@@ -214,15 +221,15 @@ class _AddLeadNoteState extends State<AddLeadNote> {
                   padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
                   child: MaterialButton(
                     onPressed: () async {
-                      final note = addNoteController.text;
+                      final note = "Leads";
                       final description = addDescController.text;
                       final endDate = '';
                       final location = '';
-                      final startDate = '';
+                      final startDate = DateTime.now().toString();
                       final pID = '';
-                      final status = '';
-                      final type = '';
-                      final userID = '';
+                      final status = dropdownvalue;
+                      final type = "FollowUp";
+                      final userID = publicController.uid;
                       if (note.isNotEmpty && description.isNotEmpty) {
                         final collectionRef =
                             FirebaseFirestore.instance.collection('Actions');
@@ -238,7 +245,7 @@ class _AddLeadNoteState extends State<AddLeadNote> {
                             'type': type,
                             'userID': userID,
                           });
-                          FirebaseFirestore.instance.collection("Leads").doc(widget.id).collection("FollowUps").doc(res.id).set(
+                          await FirebaseFirestore.instance.collection("Leads").doc(widget.id).collection("FollowUps").doc(res.id).set(
                               {
                                 "actionId":res.id
                               });
