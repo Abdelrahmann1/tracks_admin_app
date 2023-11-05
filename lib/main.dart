@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tracks_admin_app/screens/splash_screen/splash_screen_view.dart';
+import 'package:tracks_admin_app/utils/app_colors.dart';
 import 'package:tracks_admin_app/utils/app_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 void main() async {
@@ -8,12 +10,11 @@ void main() async {
   );
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'The Flutter Way',
       theme: ThemeData(
@@ -35,11 +36,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 const defaultInputBorder = OutlineInputBorder(
   borderRadius: BorderRadius.all(Radius.circular(16)),
-  borderSide: BorderSide(
-    color: Color(0xFFDEE3F2),
-    width: 1,
-  ),
+  borderSide: BorderSide(color: Color(0xFFDEE3F2), width: 1),
 );

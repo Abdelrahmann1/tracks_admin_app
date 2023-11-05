@@ -48,6 +48,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print("Widget ID : ${widget.id}" );
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
@@ -556,8 +557,8 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                MainAxisAlignment
+                                                    .spaceBetween,
                                                 children: [
                                                   Text(
                                                     'Type Of Lead  : ',
@@ -566,17 +567,49 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                                       color: Color(0xFF606A85),
                                                       fontSize: 14,
                                                       fontWeight:
-                                                          FontWeight.normal,
+                                                      FontWeight.normal,
                                                     ),
                                                   ),
                                                   Text(
-                                                    docData["type"],
+                                                    docData["description"],
                                                     style: GoogleFonts
                                                         .plusJakartaSans(
                                                       color: Color(0xFF15161E),
                                                       fontSize: 14,
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                      FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 8, 10, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                MainAxisAlignment
+                                                    .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'Date  : ',
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(
+                                                      color: Color(0xFF606A85),
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                      FontWeight.normal,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    docData["startDate"],
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(
+                                                      color: Color(0xFF15161E),
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                      FontWeight.w500,
                                                     ),
                                                   ),
                                                 ],

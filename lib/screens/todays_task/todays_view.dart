@@ -12,7 +12,6 @@ class TodayScreen extends StatefulWidget {
   @override
   State<TodayScreen> createState() => _TodayScreenState();
 }
-
 class _TodayScreenState extends State<TodayScreen> {
   String checkIn = "--/--";
   String checkOut = "--/--";
@@ -22,7 +21,6 @@ class _TodayScreenState extends State<TodayScreen> {
     try {
       QuerySnapshot snap = await FirebaseFirestore.instance
           .collection("Employee")
-          .where("email", isEqualTo: Users.userName)
           .get();
       DocumentSnapshot snap2 = await FirebaseFirestore.instance
           .collection("Employee")
@@ -64,7 +62,8 @@ class _TodayScreenState extends State<TodayScreen> {
                 style: TextStyle(
                     color: AppColors.shadowColorLight,
                     fontSize: 18,
-                    fontWeight: FontWeight.w400),
+                    fontWeight: FontWeight.w400
+                ),
               ),
             ),
             Container(
@@ -193,7 +192,6 @@ class _TodayScreenState extends State<TodayScreen> {
                             QuerySnapshot snap = await FirebaseFirestore
                                 .instance
                                 .collection("Employee")
-                                .where("email", isEqualTo: Users.userName)
                                 .get();
                             DocumentSnapshot snap2 =
                                 await FirebaseFirestore.instance

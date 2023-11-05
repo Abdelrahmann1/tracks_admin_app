@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pmvvm/mvvm_builder.widget.dart';
 import 'package:pmvvm/views/hook.view.dart';
 import 'package:tracks_admin_app/screens/Calendar_Screen/calendar_screen_view_model.dart';
 import 'package:tracks_admin_app/screens/Home/home_view_model.dart';
-import 'package:animated_button/animated_button.dart';
 import 'package:tracks_admin_app/utils/app_colors.dart';
 import '../../utils/app_router.dart';
+import '../Leads/LeadsListView.dart';
+
 class CalenderScreen extends StatelessWidget {
   const CalenderScreen({Key? key}) : super(key: key);
   @override
@@ -23,56 +26,248 @@ class CalenderView extends HookView<HomeViewModel> {
   @override
   Widget render(context, viewModel) {
     return SafeArea(
-      child: Scaffold(
-          body: Center(
+        child: Scaffold(
+            backgroundColor: AppColors.white,
+            body: SingleChildScrollView(
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-            AnimatedButton(
-              color: AppColors.primaryColor,
-              onPressed: () {
-                Navigator.pushNamed(context, AppRouter.leadsScreen);
-              },
-              enabled: true,
-              shadowDegree: ShadowDegree.light,
-              child: const Text(
-                'Leads',
-                style: TextStyle(
-                  fontSize: 22,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                ),
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'My Stats',
+                          style: GoogleFonts.plusJakartaSans(
+                            color: const Color(0xFF101213),
+                            fontSize: 24,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Align(
+                          alignment: const AlignmentDirectional(0.00, 0.00),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 16, 0, 0),
+                            child: Wrap(
+                              spacing: 16,
+                              runSpacing: 16,
+                              alignment: WrapAlignment.start,
+                              crossAxisAlignment: WrapCrossAlignment.start,
+                              direction: Axis.horizontal,
+                              runAlignment: WrapAlignment.start,
+                              verticalDirection: VerticalDirection.down,
+                              clipBehavior: Clip.none,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(LeadsWidget());
+                                     // AppRouter.leadsScreen
+                                  },
+                                  child: Container(
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.4,
+                                    height: 160,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFF1F4F8),
+                                      borderRadius: BorderRadius.circular(24),
+                                    ),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              12, 12, 12, 12),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Icon(
+                                            Icons.supervisor_account_rounded,
+                                            color: Color(0xFF101213),
+                                            size: 44,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 12, 0, 4),
+                                            child: Text(
+                                              'LEADS',
+                                              textAlign: TextAlign.center,
+                                              style:
+                                                  GoogleFonts.plusJakartaSans(
+                                                color: const Color(0xFF101213),
+                                                fontSize: 36,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                          Text(
+                                            'Customers',
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.plusJakartaSans(
+                                              color: const Color(0xFF57636C),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, AppRouter.unitesScreen);
+                                  },
+                                  child: Container(
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 0.4,
+                                    height: 160,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFF1F4F8),
+                                      borderRadius: BorderRadius.circular(24),
+                                    ),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              12, 12, 12, 12),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Icon(
+                                            Icons.supervisor_account_rounded,
+                                            color: Color(0xFF101213),
+                                            size: 44,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 12, 0, 4),
+                                            child: Text(
+                                              'UNITS',
+                                              textAlign: TextAlign.center,
+                                              style:
+                                                  GoogleFonts.plusJakartaSans(
+                                                color: const Color(0xFF101213),
+                                                fontSize: 36,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                          Text(
+                                            'Customers',
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.plusJakartaSans(
+                                              color: const Color(0xFF57636C),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: MediaQuery.sizeOf(context).width * 0.4,
+                                  height: 160,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFF1F4F8),
+                                    borderRadius: BorderRadius.circular(24),
+                                  ),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            12, 12, 12, 12),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(
+                                          Icons.supervisor_account_rounded,
+                                          color: Color(0xFF101213),
+                                          size: 44,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(0, 12, 0, 4),
+                                          child: Text(
+                                            '56.4k',
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.plusJakartaSans(
+                                              color: const Color(0xFF101213),
+                                              fontSize: 36,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          'Customers',
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.plusJakartaSans(
+                                            color: const Color(0xFF57636C),
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 20),
-            AnimatedButton(
-              color: AppColors.primaryColor,
-              onPressed: () {
-                Navigator.pushNamed(context, AppRouter.unitesScreen);
-
-              },
-              enabled: true,
-              shadowDegree: ShadowDegree.light,
-              child: const Text(
-                'Units',
-                style: TextStyle(
-                  fontSize: 22,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ]))),
-    );
+            )));
   }
 }
-// LogOut Funcation
-// MaterialButton(
-// onPressed: () async {
-// final SharedPreferences prefs =
-// await SharedPreferences.getInstance();
-// await prefs.remove('EmployeeEmail');
-// SystemNavigator.pop();
+// Center(
+// child: Column(
+// mainAxisAlignment: MainAxisAlignment.center,
+// children: [
+// AnimatedButton(
+// color: AppColors.primaryColor,
+// onPressed: () {
+// Navigator.pushNamed(context, AppRouter.leadsScreen);
 // },
-// child:
-// Container(color: Colors.red, child: const Text("Log Out")))
+// enabled: true,
+// shadowDegree: ShadowDegree.light,
+// child: const Text(
+// 'Leads',
+// style: TextStyle(
+// fontSize: 22,
+// color: Colors.white,
+// fontWeight: FontWeight.w500,
+// ),
+// ),
+// ),
+// const SizedBox(height: 20),
+// AnimatedButton(
+// color: AppColors.primaryColor,
+// onPressed: () {
+// Navigator.pushNamed(context, AppRouter.unitesScreen);
+//
+// },
+// enabled: true,
+// shadowDegree: ShadowDegree.light,
+// child: const Text(
+// 'Units',
+// style: TextStyle(
+// fontSize: 22,
+// color: Colors.white,
+// fontWeight: FontWeight.w500,
+// ),
+// ),
+// ),
+// ]))),
