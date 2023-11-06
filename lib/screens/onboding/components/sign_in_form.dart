@@ -180,8 +180,7 @@ class _SignInFormState extends State<SignInForm> {
                   onInit: (artboard) {
                     StateMachineController controller =
                         getRiveController(artboard);
-                    confetti =
-                        controller.findSMI("Trigger explosion") as SMITrigger;
+                    confetti = controller.findSMI("Trigger explosion") as SMITrigger;
                   },
                 ),
               ))
@@ -190,35 +189,32 @@ class _SignInFormState extends State<SignInForm> {
     );
   }
 
-  String failureMassage = '';
   bool loading = false;
   bool? isLogin = false;
-
   signInWithEmailAndPassword() async {
+    String failureMassage = '';
     setState(() {
       isLogin = true;
     });
     try {
-
       String email = emailController.text;
       String password = passwordController.text;
       UserCredential userCredential = await FirebaseAuth.instance
-      .signInWithEmailAndPassword(email: email, password: password);
+          .signInWithEmailAndPassword(email: email, password: password);
       final prefs = await SharedPreferences.getInstance();
+      var docSnap = await FirebaseFirestore.instance.collection("Employee").
+      doc(userCredential.user!.uid).get();
+      publicController.type = docSnap["type"];
       await prefs.setString('uidToken', userCredential.user!.uid);
+      await prefs.setString('type', publicController.type);
       publicController.uid = userCredential.user!.uid;
-      Navigator.pushNamedAndRemoveUntil(context, AppRouter.homeScreen, (Route<dynamic> route) => false);
+      Navigator.pushNamedAndRemoveUntil(
+          context, AppRouter.homeScreen, (Route<dynamic> route) => false);
     } on FirebaseAuthException catch (e) {
-      switch (e.code) {
-        case "user-not-found":
-          failureMassage = "user-not-found";
-          break;
-        case "invalid-email":
-          failureMassage = "invalid-email";
-          break;
-        case "wrong-password":
-          failureMassage = "wrong-password";
-          break;
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
       }
       showDialog(
           context: context,
@@ -235,7 +231,7 @@ class _SignInFormState extends State<SignInForm> {
                 children: [
                   Text(
                     failureMassage,
-                    style: const TextStyle(color: AppColors.primaryColor),
+                    style: const TextStyle(color: AppColors.black26),
                   ),
                 ],
               ),
@@ -257,7 +253,8 @@ class _SignInFormState extends State<SignInForm> {
                             ),
                             alignment: AlignmentDirectional(0.00, 0.00),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                               child: Text(
                                 'ok',
                                 style: GoogleFonts.plusJakartaSans(
@@ -269,7 +266,7 @@ class _SignInFormState extends State<SignInForm> {
                             ),
                           ),
                         )
-                         // Text("ok" ,style: TextStyle(color: Colors.black ,fontSize: 20),),
+                        // Text("ok" ,style: TextStyle(color: Colors.black ,fontSize: 20),),
                       ],
                     ))
               ],
@@ -279,49 +276,6 @@ class _SignInFormState extends State<SignInForm> {
       setState(() {
         isLogin = false;
       });
-    }
-  }
-
-  logIn() async {
-    String email = emailController.text;
-    String password = passwordController.text;
-    if (email.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("You Shuold Enter Email")));
-    } else if (password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("You Shuold Enter Password")));
-    } else {
-      QuerySnapshot snap = await FirebaseFirestore.instance
-          .collection("Employee")
-          .where("email", isEqualTo: emailController.text.toString())
-          .get();
-      try {
-        if (password == snap.docs[0]['password']) {
-          sharedPreferences = await SharedPreferences.getInstance();
-          sharedPreferences.setString("EmployeeEmail", email.toString())
-              .then((_) {
-            Navigator.pushNamed(context, AppRouter.homeScreen);
-          });
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("password is not correct")));
-        }
-      } catch (e) {
-        String error = " ";
-        print(e);
-        if (e.toString() == "Invalid value: Valid value range is empty: 0") {
-          setState(() {
-            error = "emp id is not exist";
-          });
-        } else {
-          setState(() {
-            error = "emp id is not exist";
-          });
-        }
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(error)));
-      }
     }
   }
 }
@@ -347,6 +301,4 @@ class CustomPositioned extends StatelessWidget {
       ),
     );
   }
-
-
 }

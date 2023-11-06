@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tracks_admin_app/screens/Leads/LeadsDetail.dart';
 import 'package:tracks_admin_app/screens/Leads/add_leads.dart';
+import 'package:get/get.dart';
 
+import '../../controller/puplic.dart';
 import '../Units/app_styles.dart';
 
 class LeadsWidget extends StatefulWidget {
@@ -17,6 +17,8 @@ class LeadsWidget extends StatefulWidget {
 
 class _LeadsWidgetState extends State<LeadsWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  PublicController publicController = Get.put((PublicController()));
+
   List<String> categories = [
     "New cairo",
     "New capital",
@@ -42,11 +44,12 @@ class _LeadsWidgetState extends State<LeadsWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Container(
+      floatingActionButton: publicController.type=="admin"
+          ? Container(
         padding: const EdgeInsets.only(bottom: 50.0),
         child: Align(
           alignment: Alignment.bottomCenter,
-          child: FloatingActionButton.extended(
+          child:FloatingActionButton.extended(
             onPressed: () {
               Get.to(AddLead());
             },
@@ -54,8 +57,9 @@ class _LeadsWidgetState extends State<LeadsWidget> {
             icon: const Icon(Icons.add),
             label: const Text("Add Lead"),
           ),
-        ),
-      ),
+        )
+      )
+          :Container(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       key: scaffoldKey,
       backgroundColor: Colors.white,

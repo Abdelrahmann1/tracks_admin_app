@@ -48,7 +48,6 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print("Widget ID : ${widget.id}" );
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
@@ -73,7 +72,6 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
             fontWeight: FontWeight.w600,
           ),
         ),
-        actions: [],
         centerTitle: false,
         elevation: 0,
       ),
@@ -81,7 +79,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
         top: true,
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -380,7 +378,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                         //Navigator.pushNamed(context, AppRouter.addLeadNote);
                       },
                       color: AppColors.primaryColor,
-                      child: Text(
+                      child: const Text(
                         "Add Note",
                         style: TextStyle(color: AppColors.white),
                       ),
@@ -445,7 +443,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                 var docData = snapshot.data!;
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
-                                  return CircularProgressIndicator();
+                                  return const CircularProgressIndicator();
                                 }
 
                                 if (snapshot.hasError) {
@@ -453,7 +451,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                 }
 
                                 if (!snapshot.hasData) {
-                                  return Text('No follow-ups found.');
+                                  return const Text('No follow-ups found.');
                                 }
 
                                 return // Generated code for this primaryContent Widget...
@@ -467,13 +465,13 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
                                       border: Border.all(
-                                        color: Color(0xFFE5E7EB),
+                                        color: const Color(0xFFE5E7EB),
                                       ),
                                     ),
                                     child: Expanded(
                                       flex: 8,
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
                                             16, 16, 0, 16),
                                         child: Column(
                                           crossAxisAlignment:
@@ -482,13 +480,13 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                             Text(
                                               'Lead Details',
                                               style: GoogleFonts.outfit(
-                                                color: Color(0xFF15161E),
+                                                color: const Color(0xFF15161E),
                                                 fontSize: 24,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
+                                              padding: const EdgeInsetsDirectional
                                                   .fromSTEB(0, 8, 10, 0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
@@ -500,7 +498,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                                     'Name : ',
                                                     style: GoogleFonts
                                                         .plusJakartaSans(
-                                                      color: Color(0xFF606A85),
+                                                      color: const Color(0xFF606A85),
                                                       fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.w500,
@@ -510,7 +508,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                                     docData["name"],
                                                     style: GoogleFonts
                                                         .plusJakartaSans(
-                                                      color: Color(0xFF15161E),
+                                                      color: const Color(0xFF15161E),
                                                       fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.w500,
@@ -520,7 +518,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
+                                              padding: const EdgeInsetsDirectional
                                                   .fromSTEB(0, 8, 10, 0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
@@ -532,7 +530,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                                     'Status Of Lead : ',
                                                     style: GoogleFonts
                                                         .plusJakartaSans(
-                                                      color: Color(0xFF606A85),
+                                                      color: const Color(0xFF606A85),
                                                       fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.normal,
@@ -542,7 +540,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                                     docData["status"],
                                                     style: GoogleFonts
                                                         .plusJakartaSans(
-                                                      color: Color(0xFF15161E),
+                                                      color: const Color(0xFF15161E),
                                                       fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.w500,
@@ -552,7 +550,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
+                                              padding: const EdgeInsetsDirectional
                                                   .fromSTEB(0, 8, 10, 0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
@@ -564,7 +562,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                                     'Type Of Lead  : ',
                                                     style: GoogleFonts
                                                         .plusJakartaSans(
-                                                      color: Color(0xFF606A85),
+                                                      color: const Color(0xFF606A85),
                                                       fontSize: 14,
                                                       fontWeight:
                                                       FontWeight.normal,
@@ -574,7 +572,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                                     docData["description"],
                                                     style: GoogleFonts
                                                         .plusJakartaSans(
-                                                      color: Color(0xFF15161E),
+                                                      color: const Color(0xFF15161E),
                                                       fontSize: 14,
                                                       fontWeight:
                                                       FontWeight.w500,
@@ -584,7 +582,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
+                                              padding: const EdgeInsetsDirectional
                                                   .fromSTEB(0, 8, 10, 0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
@@ -596,7 +594,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                                     'Date  : ',
                                                     style: GoogleFonts
                                                         .plusJakartaSans(
-                                                      color: Color(0xFF606A85),
+                                                      color: const Color(0xFF606A85),
                                                       fontSize: 14,
                                                       fontWeight:
                                                       FontWeight.normal,
@@ -606,7 +604,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                                     docData["startDate"],
                                                     style: GoogleFonts
                                                         .plusJakartaSans(
-                                                      color: Color(0xFF15161E),
+                                                      color: const Color(0xFF15161E),
                                                       fontSize: 14,
                                                       fontWeight:
                                                       FontWeight.w500,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tracks_admin_app/screens/splash_screen/splash_screen_view.dart';
-import 'package:tracks_admin_app/utils/app_colors.dart';
 import 'package:tracks_admin_app/utils/app_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 void main() async {

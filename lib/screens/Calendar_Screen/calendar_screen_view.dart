@@ -45,7 +45,7 @@ class CalenderView extends HookView<HomeViewModel> {
                           style: GoogleFonts.plusJakartaSans(
                             color: const Color(0xFF101213),
                             fontSize: 24,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                         Align(
@@ -65,8 +65,8 @@ class CalenderView extends HookView<HomeViewModel> {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    Get.to(LeadsWidget());
-                                     // AppRouter.leadsScreen
+                                    Get.to(const LeadsWidget());
+                                    // AppRouter.leadsScreen
                                   },
                                   child: Container(
                                     width:
@@ -86,7 +86,7 @@ class CalenderView extends HookView<HomeViewModel> {
                                             MainAxisAlignment.center,
                                         children: [
                                           const Icon(
-                                            Icons.supervisor_account_rounded,
+                                            Icons.person,
                                             color: Color(0xFF101213),
                                             size: 44,
                                           ),
@@ -141,7 +141,7 @@ class CalenderView extends HookView<HomeViewModel> {
                                             MainAxisAlignment.center,
                                         children: [
                                           const Icon(
-                                            Icons.supervisor_account_rounded,
+                                            Icons.maps_home_work_rounded,
                                             color: Color(0xFF101213),
                                             size: 44,
                                           ),
@@ -160,7 +160,7 @@ class CalenderView extends HookView<HomeViewModel> {
                                             ),
                                           ),
                                           Text(
-                                            'Customers',
+                                            'All Units',
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.plusJakartaSans(
                                               color: const Color(0xFF57636C),
@@ -170,53 +170,6 @@ class CalenderView extends HookView<HomeViewModel> {
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: MediaQuery.sizeOf(context).width * 0.4,
-                                  height: 160,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFF1F4F8),
-                                    borderRadius: BorderRadius.circular(24),
-                                  ),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            12, 12, 12, 12),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(
-                                          Icons.supervisor_account_rounded,
-                                          color: Color(0xFF101213),
-                                          size: 44,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0, 12, 0, 4),
-                                          child: Text(
-                                            '56.4k',
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.plusJakartaSans(
-                                              color: const Color(0xFF101213),
-                                              fontSize: 36,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-                                        Text(
-                                          'Customers',
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.plusJakartaSans(
-                                            color: const Color(0xFF57636C),
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ],
                                     ),
                                   ),
                                 ),
@@ -232,42 +185,3 @@ class CalenderView extends HookView<HomeViewModel> {
             )));
   }
 }
-// Center(
-// child: Column(
-// mainAxisAlignment: MainAxisAlignment.center,
-// children: [
-// AnimatedButton(
-// color: AppColors.primaryColor,
-// onPressed: () {
-// Navigator.pushNamed(context, AppRouter.leadsScreen);
-// },
-// enabled: true,
-// shadowDegree: ShadowDegree.light,
-// child: const Text(
-// 'Leads',
-// style: TextStyle(
-// fontSize: 22,
-// color: Colors.white,
-// fontWeight: FontWeight.w500,
-// ),
-// ),
-// ),
-// const SizedBox(height: 20),
-// AnimatedButton(
-// color: AppColors.primaryColor,
-// onPressed: () {
-// Navigator.pushNamed(context, AppRouter.unitesScreen);
-//
-// },
-// enabled: true,
-// shadowDegree: ShadowDegree.light,
-// child: const Text(
-// 'Units',
-// style: TextStyle(
-// fontSize: 22,
-// color: Colors.white,
-// fontWeight: FontWeight.w500,
-// ),
-// ),
-// ),
-// ]))),

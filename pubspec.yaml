@@ -49,6 +49,7 @@ dependencies:
   animated_button: ^0.2.0
   month_year_picker: ^0.3.0+1
   firebase_auth: ^4.12.1
+  csv: ^5.1.1
   get:
 
 dev_dependencies:
@@ -80,6 +81,7 @@ flutter:
     - assets/icons/
     - assets/RiveAssets/
     - assets/logo/
+    - assets/Excel/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
