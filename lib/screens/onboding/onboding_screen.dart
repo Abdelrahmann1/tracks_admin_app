@@ -66,9 +66,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Text(
                           "INTERNATIONAL",
                           style: TextStyle(
-                              fontSize: 25, fontFamily: "Poppins", height: 1.2 ,color: AppColors.primaryColor),
+                              fontSize: 25,
+                              fontFamily: "Poppins",
+                              height: 1.2,
+                              color: AppColors.primaryColor),
                         ),
-
                         SizedBox(
                           height: 16,
                         ),
@@ -95,11 +97,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 24.0),
-                      child: Text("WELCOME TO TRACKS INTERNATIONAL",
+                      child: Text(
+                        "WELCOME TO TRACKS INTERNATIONAL",
                         style: TextStyle(),
                       ),
                     ),
-                    const SizedBox(height: 60,)
+                    const SizedBox(
+                      height: 60,
+                    )
                   ]),
             ),
           ),

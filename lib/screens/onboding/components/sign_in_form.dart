@@ -180,7 +180,8 @@ class _SignInFormState extends State<SignInForm> {
                   onInit: (artboard) {
                     StateMachineController controller =
                         getRiveController(artboard);
-                    confetti = controller.findSMI("Trigger explosion") as SMITrigger;
+                    confetti =
+                        controller.findSMI("Trigger explosion") as SMITrigger;
                   },
                 ),
               ))
@@ -202,12 +203,14 @@ class _SignInFormState extends State<SignInForm> {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       final prefs = await SharedPreferences.getInstance();
-      var docSnap = await FirebaseFirestore.instance.collection("Employee").
-      doc(userCredential.user!.uid).get();
-      publicController.type = docSnap["type"];
+      var docSnap = await FirebaseFirestore.instance
+          .collection("Employee")
+          .doc(userCredential.user!.uid)
+          .get();
       await prefs.setString('uidToken', userCredential.user!.uid);
-      await prefs.setString('type', publicController.type);
+      // await prefs.setString('type', publicController.type);
       publicController.uid = userCredential.user!.uid;
+      publicController.type = docSnap["type"];
       Navigator.pushNamedAndRemoveUntil(
           context, AppRouter.homeScreen, (Route<dynamic> route) => false);
     } on FirebaseAuthException catch (e) {

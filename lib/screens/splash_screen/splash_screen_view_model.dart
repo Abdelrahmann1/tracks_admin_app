@@ -15,18 +15,20 @@ class SplashScreenViewModel extends ViewModel {
     Future.delayed(const Duration(seconds: 3), () async {});
     final prefs = await SharedPreferences.getInstance();
     final String? uidTokenFromUser = prefs.getString('uidToken');
+    final type = await prefs.getString('type');
     if (uidTokenFromUser == null) {
       Navigator.pushReplacementNamed(context, AppRouter.onboardingScreen);
     } else {
       publicController.uid = uidTokenFromUser;
+      publicController.type = type;
       Navigator.pushReplacementNamed(context, AppRouter.homeScreen);
     }
   }
+
   void getUserInfo() async {
     final sharedPreferences = await SharedPreferences.getInstance();
     Users.id = sharedPreferences.getString("uidToken")!;
     User? user = FirebaseAuth.instance.currentUser;
-
     if (user != null) {
       String? email = user.email;
 
@@ -52,8 +54,8 @@ class SplashScreenViewModel extends ViewModel {
       }
     });
   }
-  PublicController publicController = Get.put((PublicController()));
 
+  PublicController publicController = Get.put((PublicController()));
 
   @override
   void init() {
@@ -62,6 +64,5 @@ class SplashScreenViewModel extends ViewModel {
     delay();
     getUserInfo();
     print(publicController.uid);
-
   }
 }

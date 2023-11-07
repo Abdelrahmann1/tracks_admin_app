@@ -3,12 +3,13 @@ import 'package:get/get.dart';
 import 'package:tracks_admin_app/screens/splash_screen/splash_screen_view.dart';
 import 'package:tracks_admin_app/utils/app_router.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-  );
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 const defaultInputBorder = OutlineInputBorder(
   borderRadius: BorderRadius.all(Radius.circular(16)),
   borderSide: BorderSide(color: Color(0xFFDEE3F2), width: 1),

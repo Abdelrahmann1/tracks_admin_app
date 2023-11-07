@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tracks_admin_app/extentions/padding_ext.dart';
 import 'package:tracks_admin_app/utils/app_colors.dart';
 import '../../controller/puplic.dart';
+
 class AddLeadNote extends StatefulWidget {
   final String status;
   final String id;
@@ -13,6 +14,7 @@ class AddLeadNote extends StatefulWidget {
   @override
   State<AddLeadNote> createState() => _AddLeadNoteState();
 }
+
 class _AddLeadNoteState extends State<AddLeadNote> {
   TextEditingController addDescController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -27,11 +29,12 @@ class _AddLeadNoteState extends State<AddLeadNote> {
     'Trash',
     'Done',
   ];
+  bool submitting = false;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child:
-        Scaffold(
+        child: Scaffold(
             key: _formKey,
             body: Column(
               children: [
@@ -154,59 +157,71 @@ class _AddLeadNoteState extends State<AddLeadNote> {
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-                  child: MaterialButton(
-                    onPressed: () async {
-                      final description = addDescController.text;
-                      final endDate = '';
-                      final location = '';
-                      final startDate = DateTime.now().toString();
-                      final pID = widget.id;
-                      final status = dropdownvalue;
-                      final type = "FollowUp";
-                      final userID = publicController.uid;
-                      if (description.isNotEmpty) {
-                        final collectionRef =
-                            FirebaseFirestore.instance.collection('Actions');
-                        try {
-                          var res = await collectionRef.add({
-                            'name': "FollowUp",
-                            'description': description,
-                            'endDate': endDate,
-                            'location': location,
-                            'startDate': startDate,
-                            'pID': pID,
-                            'status': status,
-                            'type': type,
-                            'userID': userID,
-                          });
-                          await FirebaseFirestore.instance
-                              .collection("Leads")
-                              .doc(widget.id)
-                              .collection("FollowUp")
-                              .doc(res.id)
-                              .set({"actionID": res.id});
-                          Navigator.pop(context);
-                        } catch (e) {
-                          print('Error adding data to Firestore: $e');
-                        }
-                      }
-                    },
-                    color: const Color(0xFF6F61EF),
-                    textColor: AppColors.white,
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.receipt_long,
-                          size: 15,
+                  child: submitting
+                      ? Center(
+                          child:
+                              CircularProgressIndicator(), // Show progress indicator
+                        )
+                      : MaterialButton(
+                          onPressed: () async {
+                            setState(() {
+                              submitting = true; // Start submission
+                            });
+                            final description = addDescController.text;
+                            final endDate = '';
+                            final location = '';
+                            final startDate = DateTime.now().toString();
+                            final pID = widget.id;
+                            final status = dropdownvalue;
+                            final type = "FollowUp";
+                            final userID = publicController.uid;
+                            if (description.isNotEmpty) {
+                              final collectionRef = FirebaseFirestore.instance
+                                  .collection('Actions');
+                              try {
+                                var res = await collectionRef.add({
+                                  'name': "FollowUp",
+                                  'description': description,
+                                  'endDate': endDate,
+                                  'location': location,
+                                  'startDate': startDate,
+                                  'pID': pID,
+                                  'status': status,
+                                  'type': type,
+                                  'userID': userID,
+                                });
+                                await FirebaseFirestore.instance
+                                    .collection("Leads")
+                                    .doc(widget.id)
+                                    .collection("FollowUp")
+                                    .doc(res.id)
+                                    .set({"actionID": res.id});
+                                Navigator.pop(context);
+                              } catch (e) {
+                                print('Error adding data to Firestore: $e');
+                              } finally {
+                                setState(() {
+                                  submitting = false; // Stop submission
+                                });
+                              }
+                            }
+                          },
+                          color: const Color(0xFF6F61EF),
+                          textColor: AppColors.white,
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.receipt_long,
+                                size: 15,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text('Submit Note'),
+                            ],
+                          ),
                         ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text('Submit Note'),
-                      ],
-                    ),
-                  ),
                 )
               ],
             ).setPageHorizontalPadding(context)));

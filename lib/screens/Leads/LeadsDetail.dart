@@ -441,8 +441,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                               builder: (BuildContext context,
                                   AsyncSnapshot<DocumentSnapshot> snapshot) {
                                 var docData = snapshot.data!;
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
                                   return const CircularProgressIndicator();
                                 }
 
@@ -454,7 +453,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                   return const Text('No follow-ups found.');
                                 }
 
-                                return // Generated code for this primaryContent Widget...
+                                return
                                     Padding(
                                   padding: const EdgeInsets.only(top: 8.0),
                                   child: Container(
