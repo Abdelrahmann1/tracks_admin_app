@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 import 'package:tracks_admin_app/screens/employee_attendance_history/employee_attendance_history.dart';
+import 'package:tracks_admin_app/screens/employee_status/employee_status.dart';
 import 'package:tracks_admin_app/screens/splash_screen/splash_screen_view.dart';
 import 'package:tracks_admin_app/utils/app_router.dart';
 import 'package:firebase_core/firebase_core.dart';

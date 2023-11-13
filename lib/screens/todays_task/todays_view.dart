@@ -2,11 +2,17 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:getwidget/components/button/gf_button.dart';
+import 'package:getwidget/shape/gf_button_shape.dart';
+import 'package:getwidget/size/gf_size.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'package:tracks_admin_app/extentions/padding_ext.dart';
 import 'package:tracks_admin_app/models/user_model.dart';
+import 'package:tracks_admin_app/screens/employee_status/employee_status.dart';
 import 'package:tracks_admin_app/services/location_services.dart';
 import 'package:tracks_admin_app/utils/app_colors.dart';
 
@@ -202,83 +208,105 @@ class _TodayScreenState extends State<TodayScreen> {
                   );
                 }),
             checkOut == "--/--"
-                ? Container(
-                    margin: const EdgeInsets.only(top: 30),
-                    child: Builder(builder: (context) {
-                      final GlobalKey<SlideActionState> key = GlobalKey();
-                      return SlideAction(
-                          text: checkIn == "--/--"
-                              ? "Slide to check In"
-                              : "Slide to Check Out",
-                          textStyle: const TextStyle(
-                              color: AppColors.black54, fontSize: 18),
-                          outerColor: AppColors.white,
-                          innerColor: AppColors.primaryColor,
-                          key: key,
-                          onSubmit: () async {
-                            if (Users.lat != 0) {
-                              getLocation();
-                              Timer(const Duration(seconds: 1), () {});
-                              QuerySnapshot snap = await FirebaseFirestore
-                                  .instance
-                                  .collection("Employee")
-                                  .get();
-                              DocumentSnapshot snap2 =
-                                  await FirebaseFirestore.instance
+                ? Column(
+                  children: [
+                    Container(
+                        margin: const EdgeInsets.only(top: 30),
+                        child: Builder(builder: (context) {
+                          final GlobalKey<SlideActionState> key = GlobalKey();
+                          return SlideAction(
+                              text: checkIn == "--/--"
+                                  ? "Slide to check In"
+                                  : "Slide to Check Out",
+                              textStyle: const TextStyle(
+                                  color: AppColors.black54, fontSize: 18),
+                              outerColor: AppColors.white,
+                              innerColor: AppColors.primaryColor,
+                              key: key,
+                              onSubmit: () async {
+                                if (Users.lat != 0) {
+                                  getLocation();
+                                  Timer(const Duration(seconds: 1), () {});
+                                  QuerySnapshot snap = await FirebaseFirestore
+                                      .instance
                                       .collection("Employee")
-                                      .doc(snap.docs[0].id)
-                                      .collection("Records")
-                                      .doc(
-                                        DateFormat("dd MMMM yyyy")
-                                            .format(DateTime.now()),
-                                      )
                                       .get();
-                              try {
-                                String checkIn = snap2['checkIn'];
-                                setState(() {
-                                  checkOut = DateFormat('hh : mm ')
-                                      .format(DateTime.now());
-                                });
-                                await FirebaseFirestore.instance
-                                    .collection("Employee")
-                                    .doc(snap.docs[0].id)
-                                    .collection("Records")
-                                    .doc(
-                                      DateFormat("dd MMMM yyyy")
+                                  DocumentSnapshot snap2 =
+                                      await FirebaseFirestore.instance
+                                          .collection("Employee")
+                                          .doc(snap.docs[0].id)
+                                          .collection("Records")
+                                          .doc(
+                                            DateFormat("dd MMMM yyyy")
+                                                .format(DateTime.now()),
+                                          )
+                                          .get();
+                                  try {
+                                    String checkIn = snap2['checkIn'];
+                                    setState(() {
+                                      checkOut = DateFormat('hh : mm ')
+                                          .format(DateTime.now());
+                                    });
+                                    await FirebaseFirestore.instance
+                                        .collection("Employee")
+                                        .doc(snap.docs[0].id)
+                                        .collection("Records")
+                                        .doc(
+                                          DateFormat("dd MMMM yyyy")
+                                              .format(DateTime.now()),
+                                        )
+                                        .update({
+                                      "date": Timestamp.now(),
+                                      "checkIn": checkIn,
+                                      "checkOut": DateFormat('hh : mm ')
                                           .format(DateTime.now()),
-                                    )
-                                    .update({
-                                  "date": Timestamp.now(),
-                                  "checkIn": checkIn,
-                                  "checkOut": DateFormat('hh : mm ')
-                                      .format(DateTime.now()),
-                                  "location": location
-                                });
-                              } catch (e) {
-                                setState(() {
-                                  checkIn = DateFormat('hh : mm ')
-                                      .format(DateTime.now());
-                                });
-                                await FirebaseFirestore.instance
-                                    .collection("Employee")
-                                    .doc(snap.docs[0].id)
-                                    .collection("Records")
-                                    .doc(
-                                      DateFormat("dd MMMM yyyy")
+                                      "location": location
+                                    });
+                                  } catch (e) {
+                                    setState(() {
+                                      checkIn = DateFormat('hh : mm ')
+                                          .format(DateTime.now());
+                                    });
+                                    await FirebaseFirestore.instance
+                                        .collection("Employee")
+                                        .doc(snap.docs[0].id)
+                                        .collection("Records")
+                                        .doc(
+                                          DateFormat("dd MMMM yyyy")
+                                              .format(DateTime.now()),
+                                        )
+                                        .set({
+                                      "date": Timestamp.now(),
+                                      "checkIn": DateFormat('hh : mm ')
                                           .format(DateTime.now()),
-                                    )
-                                    .set({
-                                  "date": Timestamp.now(),
-                                  "checkIn": DateFormat('hh : mm ')
-                                      .format(DateTime.now()),
-                                  "checkOut": "--/--",
-                                  "location": location
-                                });
-                              }
-                            }
-                          });
-                    }),
-                  )
+                                      "checkOut": "--/--",
+                                      "location": location
+                                    });
+                                  }
+                                }
+                              });
+                        }),
+                      ),
+                    SizedBox(height: 20,),
+                    GFButton(
+                        onPressed: (){
+                          Get.to(const EmployeeStatus());
+                        },
+                      text: "My Status Today ",
+                      textStyle: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold
+                      ),
+                      focusColor: Colors.black,
+                      size: GFSize.LARGE,
+
+                      shape: GFButtonShape.pills,
+                      color: AppColors.primaryColor,
+                      fullWidthButton: true,
+
+                    ),
+                  ],
+                )
                 : const Padding(
                     padding: EdgeInsets.all(15.0),
                     child: Padding(
