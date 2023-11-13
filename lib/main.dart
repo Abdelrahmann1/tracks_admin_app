@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:month_year_picker/month_year_picker.dart';
+import 'package:tracks_admin_app/screens/employee_attendance_history/employee_attendance_history.dart';
 import 'package:tracks_admin_app/screens/splash_screen/splash_screen_view.dart';
 import 'package:tracks_admin_app/utils/app_router.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,10 +17,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+
       debugShowCheckedModeBanner: false,
       title: 'The Flutter Way',
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFFEEF1F8),
+        scaffoldBackgroundColor:Colors.white,
         primarySwatch: Colors.blue,
         fontFamily: "Intel",
         inputDecorationTheme: const InputDecorationTheme(
@@ -32,7 +35,9 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: const SplashScreen(),
+
       routes: AppRouter().routes(),
+      localizationsDelegates: const [MonthYearPickerLocalizations.delegate],
     );
   }
 }

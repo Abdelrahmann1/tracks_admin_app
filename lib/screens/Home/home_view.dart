@@ -28,10 +28,11 @@ class HomeView extends HookView<HomeViewModel> {
         children: const [
           CalenderScreen(),
           TodayScreen(),
-          ProfileScreen(),
+          Profile05Widget(),
         ],
       ),
       bottomNavigationBar: Container(
+
         height: 70,
         margin: const EdgeInsets.only(left: 12, right: 12, bottom: 20),
         decoration: const BoxDecoration(

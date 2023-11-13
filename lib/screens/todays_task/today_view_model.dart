@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:intl/intl.dart';
 import 'package:pmvvm/pmvvm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'package:tracks_admin_app/models/user_model.dart';
+import 'package:tracks_admin_app/services/location_services.dart';
 
 class TodayTaskViewModel extends ViewModel {
   String checkIn = "--/--";
@@ -16,6 +19,7 @@ class TodayTaskViewModel extends ViewModel {
     Users.userName = name!;
     notifyListeners();
   }
+
   void getRecord() async {
     try {
       QuerySnapshot snap = await FirebaseFirestore.instance

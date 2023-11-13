@@ -27,6 +27,17 @@ class CalenderView extends HookView<HomeViewModel> {
   Widget render(context, viewModel) {
     return SafeArea(
         child: Scaffold(
+            appBar: AppBar(
+              elevation: 0,
+              title: Text('My Stats',
+                  style: GoogleFonts.outfit(
+                    color: const Color(0xFF101213),
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  )),
+              backgroundColor: AppColors.white,
+              automaticallyImplyLeading: false,
+            ),
             backgroundColor: AppColors.white,
             body: SingleChildScrollView(
               child: Column(
@@ -40,14 +51,6 @@ class CalenderView extends HookView<HomeViewModel> {
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'My Stats',
-                          style: GoogleFonts.plusJakartaSans(
-                            color: const Color(0xFF101213),
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
                         Align(
                           alignment: const AlignmentDirectional(0.00, 0.00),
                           child: Padding(

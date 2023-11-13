@@ -505,8 +505,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                                   ),
                                                   Text(
                                                     docData["name"],
-                                                    style: GoogleFonts
-                                                        .plusJakartaSans(
+                                                    style: GoogleFonts.plusJakartaSans(
                                                       color: const Color(0xFF15161E),
                                                       fontSize: 14,
                                                       fontWeight:

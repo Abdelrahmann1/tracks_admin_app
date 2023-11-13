@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'package:tracks_admin_app/extentions/padding_ext.dart';
 import 'package:tracks_admin_app/models/user_model.dart';
+import 'package:tracks_admin_app/services/location_services.dart';
 import 'package:tracks_admin_app/utils/app_colors.dart';
 
 class TodayScreen extends StatefulWidget {
@@ -12,16 +15,40 @@ class TodayScreen extends StatefulWidget {
   @override
   State<TodayScreen> createState() => _TodayScreenState();
 }
+
 class _TodayScreenState extends State<TodayScreen> {
   String checkIn = "--/--";
+  String location = " ";
   String checkOut = "--/--";
   final GlobalKey<SlideActionState> key = GlobalKey();
+  void getLocation() async {
+    List<Placemark> placeMark =
+        await placemarkFromCoordinates(Users.lat, Users.long);
+    setState(() {
+      location =
+          "${placeMark[0].street} , ${placeMark[0].administrativeArea} , ${placeMark[0].postalCode} ,${placeMark[0].country}";
+    });
+  }
+
+  void _serviceLocationService() async {
+    LocationService().initialize();
+    LocationService().getLong().then((value) {
+      setState(() {
+        Users.long = value!;
+      });
+    });
+
+    LocationService().getLat().then((value) {
+      setState(() {
+        Users.lat = value!;
+      });
+    });
+  }
 
   void getRecord() async {
     try {
-      QuerySnapshot snap = await FirebaseFirestore.instance
-          .collection("Employee")
-          .get();
+      QuerySnapshot snap =
+          await FirebaseFirestore.instance.collection("Employee").get();
       DocumentSnapshot snap2 = await FirebaseFirestore.instance
           .collection("Employee")
           .doc(snap.docs[0].id)
@@ -45,27 +72,30 @@ class _TodayScreenState extends State<TodayScreen> {
   void initState() {
     super.initState();
     getRecord();
+    _serviceLocationService();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          title: Text('Welcome',
+              style: GoogleFonts.outfit(
+                color: const Color(0xFF101213),
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              )),
+          backgroundColor: AppColors.white,
+          automaticallyImplyLeading: false,
+        ),
+
+
         body: SafeArea(
+
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              margin: const EdgeInsets.only(top: 30),
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                "WELCOME",
-                style: TextStyle(
-                    color: AppColors.shadowColorLight,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400
-                ),
-              ),
-            ),
             Container(
               margin: const EdgeInsets.only(top: 5),
               alignment: Alignment.centerLeft,
@@ -186,14 +216,29 @@ class _TodayScreenState extends State<TodayScreen> {
                           innerColor: AppColors.primaryColor,
                           key: key,
                           onSubmit: () async {
-                            Timer(const Duration(seconds: 1), () {
-                              key.currentState!.reset();
-                            });
-                            QuerySnapshot snap = await FirebaseFirestore
-                                .instance
-                                .collection("Employee")
-                                .get();
-                            DocumentSnapshot snap2 =
+                            if (Users.lat != 0) {
+                              getLocation();
+                              Timer(const Duration(seconds: 1), () {});
+                              QuerySnapshot snap = await FirebaseFirestore
+                                  .instance
+                                  .collection("Employee")
+                                  .get();
+                              DocumentSnapshot snap2 =
+                                  await FirebaseFirestore.instance
+                                      .collection("Employee")
+                                      .doc(snap.docs[0].id)
+                                      .collection("Records")
+                                      .doc(
+                                        DateFormat("dd MMMM yyyy")
+                                            .format(DateTime.now()),
+                                      )
+                                      .get();
+                              try {
+                                String checkIn = snap2['checkIn'];
+                                setState(() {
+                                  checkOut = DateFormat('hh : mm ')
+                                      .format(DateTime.now());
+                                });
                                 await FirebaseFirestore.instance
                                     .collection("Employee")
                                     .doc(snap.docs[0].id)
@@ -202,55 +247,49 @@ class _TodayScreenState extends State<TodayScreen> {
                                       DateFormat("dd MMMM yyyy")
                                           .format(DateTime.now()),
                                     )
-                                    .get();
-                            try {
-                              String checkIn = snap2['checkIn'];
-                              setState(() {
-                                checkOut = DateFormat('hh : mm ')
-                                    .format(DateTime.now());
-                              });
-                              await FirebaseFirestore.instance
-                                  .collection("Employee")
-                                  .doc(snap.docs[0].id)
-                                  .collection("Records")
-                                  .doc(
-                                    DateFormat("dd MMMM yyyy")
-                                        .format(DateTime.now()),
-                                  )
-                                  .update({
-                                "checkIn": checkIn,
-                                "checkOut": DateFormat('hh : mm ')
-                                    .format(DateTime.now())
-                              });
-                            } catch (e) {
-                              setState(() {
-                                checkIn = DateFormat('hh : mm ')
-                                    .format(DateTime.now());
-                              });
-                              await FirebaseFirestore.instance
-                                  .collection("Employee")
-                                  .doc(snap.docs[0].id)
-                                  .collection("Records")
-                                  .doc(
-                                    DateFormat("dd MMMM yyyy")
-                                        .format(DateTime.now()),
-                                  )
-                                  .set({
-                                "checkIn": DateFormat('hh : mm ')
-                                    .format(DateTime.now())
-                              });
+                                    .update({
+                                  "date": Timestamp.now(),
+                                  "checkIn": checkIn,
+                                  "checkOut": DateFormat('hh : mm ')
+                                      .format(DateTime.now()),
+                                  "location": location
+                                });
+                              } catch (e) {
+                                setState(() {
+                                  checkIn = DateFormat('hh : mm ')
+                                      .format(DateTime.now());
+                                });
+                                await FirebaseFirestore.instance
+                                    .collection("Employee")
+                                    .doc(snap.docs[0].id)
+                                    .collection("Records")
+                                    .doc(
+                                      DateFormat("dd MMMM yyyy")
+                                          .format(DateTime.now()),
+                                    )
+                                    .set({
+                                  "date": Timestamp.now(),
+                                  "checkIn": DateFormat('hh : mm ')
+                                      .format(DateTime.now()),
+                                  "checkOut": "--/--",
+                                  "location": location
+                                });
+                              }
                             }
                           });
                     }),
                   )
                 : const Padding(
                     padding: EdgeInsets.all(15.0),
-                    child: Text(
-                      "You Have complete This Day",
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 19.0),
+                      child: Text(
+                        "You Have complete This Day",
+                        style:
+                            TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  )
+                  ),
           ],
         ),
       ),

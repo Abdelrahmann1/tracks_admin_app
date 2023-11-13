@@ -208,6 +208,7 @@ class _SignInFormState extends State<SignInForm> {
           .doc(userCredential.user!.uid)
           .get();
       await prefs.setString('uidToken', userCredential.user!.uid);
+
       // await prefs.setString('type', publicController.type);
       publicController.uid = userCredential.user!.uid;
       publicController.type = docSnap["type"];
