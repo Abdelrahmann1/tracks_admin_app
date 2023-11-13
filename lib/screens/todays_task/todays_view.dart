@@ -292,7 +292,7 @@ class _TodayScreenState extends State<TodayScreen> {
                         onPressed: (){
                           Get.to(const EmployeeStatus());
                         },
-                      text: "My Status Today ",
+                      text: "My work Today ",
                       textStyle: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold

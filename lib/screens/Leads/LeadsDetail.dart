@@ -17,16 +17,16 @@ class LeadsDetailsWidget extends StatefulWidget {
 
   const LeadsDetailsWidget(
       {Key? key,
-      required this.name,
-      required this.phone,
-      required this.minPrice,
-      required this.maxPrice,
-      required this.area,
-      required this.date,
-      required this.status,
-      required this.address,
-      required this.notes,
-      required this.id})
+        required this.name,
+        required this.phone,
+        required this.minPrice,
+        required this.maxPrice,
+        required this.area,
+        required this.date,
+        required this.status,
+        required this.address,
+        required this.notes,
+        required this.id})
       : super(key: key);
 
   @override
@@ -95,7 +95,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                     children: [
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                        const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                         child: Text(
                           'Lead Details',
                           style: GoogleFonts.plusJakartaSans(
@@ -107,7 +107,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                       ),
                       Padding(
                         padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                        const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                         child: Text(
                           'Below are the details of your lead.',
                           style: GoogleFonts.plusJakartaSans(
@@ -408,7 +408,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                   ),
                 ),
                 SizedBox(
-                    width: 400,
+                    width: MediaQuery.of(context).size.width,
                     height: 200,
                     child: StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
@@ -429,10 +429,11 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                         }
                         return ListView.builder(
                           itemCount: snap.data!.docs.length,
+                          scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             DocumentSnapshot document = snap.data!.docs[index];
                             Map<String, dynamic> data =
-                                document.data() as Map<String, dynamic>;
+                            document.data() as Map<String, dynamic>;
                             return StreamBuilder<DocumentSnapshot>(
                               stream: FirebaseFirestore.instance
                                   .collection('Actions')
@@ -440,7 +441,6 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                   .snapshots(),
                               builder: (BuildContext context,
                                   AsyncSnapshot<DocumentSnapshot> snapshot) {
-                                var docData = snapshot.data!;
                                 if (snapshot.connectionState == ConnectionState.waiting) {
                                   return const CircularProgressIndicator();
                                 }
@@ -452,34 +452,33 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                 if (!snapshot.hasData) {
                                   return const Text('No follow-ups found.');
                                 }
+                                var docData = snapshot.data!;
 
                                 return
-                                    Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: Container(
-                                    width: double.infinity,
-                                    constraints: const BoxConstraints(
-                                      maxWidth: 1170,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(
-                                        color: const Color(0xFFE5E7EB),
+                                  Padding(
+                                    padding: const EdgeInsets.all( 8.0),
+                                    child: Container(
+                                      width: double.infinity,
+                                      constraints: const BoxConstraints(
+                                        maxWidth: 300,
                                       ),
-                                    ),
-                                    child: Expanded(
-                                      flex: 8,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(
+                                          color: const Color(0xFFE5E7EB),
+                                        ),
+                                      ),
                                       child: Padding(
                                         padding: const EdgeInsetsDirectional.fromSTEB(
                                             16, 16, 0, 16),
                                         child: Column(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'Lead Details',
+                                              'Details',
                                               style: GoogleFonts.outfit(
-                                                color: const Color(0xFF15161E),
+                                                color: AppColors.primaryColor,
                                                 fontSize: 24,
                                                 fontWeight: FontWeight.w500,
                                               ),
@@ -490,8 +489,8 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                MainAxisAlignment
+                                                    .spaceBetween,
                                                 children: [
                                                   Text(
                                                     'Name : ',
@@ -500,16 +499,17 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                                       color: const Color(0xFF606A85),
                                                       fontSize: 14,
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                      FontWeight.w500,
                                                     ),
                                                   ),
                                                   Text(
                                                     docData["name"],
-                                                    style: GoogleFonts.plusJakartaSans(
+                                                    style: GoogleFonts
+                                                        .plusJakartaSans(
                                                       color: const Color(0xFF15161E),
                                                       fontSize: 14,
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                      FontWeight.w500,
                                                     ),
                                                   ),
                                                 ],
@@ -521,8 +521,8 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                MainAxisAlignment
+                                                    .spaceBetween,
                                                 children: [
                                                   Text(
                                                     'Status Of Lead : ',
@@ -531,7 +531,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                                       color: const Color(0xFF606A85),
                                                       fontSize: 14,
                                                       fontWeight:
-                                                          FontWeight.normal,
+                                                      FontWeight.normal,
                                                     ),
                                                   ),
                                                   Text(
@@ -541,7 +541,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                                       color: const Color(0xFF15161E),
                                                       fontSize: 14,
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                      FontWeight.w500,
                                                     ),
                                                   ),
                                                 ],
@@ -615,8 +615,7 @@ class _LeadsDetailsWidgetState extends State<LeadsDetailsWidget> {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                );
+                                  );
                               },
                             );
                           },

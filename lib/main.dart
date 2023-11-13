@@ -9,7 +9,13 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+    apiKey: "AIzaSyA2gR4iJkSH3NgmkxU4XLzELHW2dgaLNIA",
+    appId: "1:76911324684:web:7d19acec823746bbd68829",
+    messagingSenderId: "76911324684",
+    projectId: "tracksrealestateegy",
+  ),);
   runApp(const MyApp());
 }
 
