@@ -103,7 +103,7 @@ class CalenderView extends HookView<HomeViewModel> {
                                               style:
                                               GoogleFonts.plusJakartaSans(
                                                 color: const Color(0xFF101213),
-                                                fontSize: 36,
+                                                fontSize: 30,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                             ),
@@ -158,7 +158,7 @@ class CalenderView extends HookView<HomeViewModel> {
                                               style:
                                               GoogleFonts.plusJakartaSans(
                                                 color: const Color(0xFF101213),
-                                                fontSize: 36,
+                                                fontSize: 30,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                             ),
@@ -232,7 +232,7 @@ class CalenderView extends HookView<HomeViewModel> {
                                               style:
                                               GoogleFonts.plusJakartaSans(
                                                 color: const Color(0xFF101213),
-                                                fontSize: 36,
+                                                fontSize: 30,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                             ),

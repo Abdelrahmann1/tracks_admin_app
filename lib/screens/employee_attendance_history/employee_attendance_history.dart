@@ -116,7 +116,7 @@ class _EmployeeAttendanceHistoryState extends State<EmployeeAttendanceHistory> {
                   height: 20,
                 ),
                 SizedBox(
-                  height: screenHeight / 1,
+                  height: screenHeight / 1.3,
                   child: StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance
                         .collection("Employee")
@@ -136,7 +136,7 @@ class _EmployeeAttendanceHistoryState extends State<EmployeeAttendanceHistory> {
                                   ? Container(
                                       margin: const EdgeInsets.only(
                                           top: 12, bottom: 10),
-                                      height: 150,
+                                      height: 120,
                                       decoration: const BoxDecoration(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(20)),
@@ -183,18 +183,19 @@ class _EmployeeAttendanceHistoryState extends State<EmployeeAttendanceHistory> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
-                                              Text(
-                                                "Check In ",
-                                                style: TextStyle(
-                                                    fontSize: screenWidth / 20,
-                                                    color: AppColors.green),
-                                              ),
+                                              Text("Check In ",
+                                                  style: GoogleFonts.outfit(
+                                                    color: AppColors.green,
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                  )),
                                               Text(snap[index]["checkIn"],
                                                   style: const TextStyle(
                                                       fontSize: 20,
                                                       color: AppColors.black54,
                                                       fontWeight:
-                                                          FontWeight.bold)),
+                                                          FontWeight.bold)
+                                              ),
                                             ],
                                           )),
                                           Expanded(
@@ -205,10 +206,10 @@ class _EmployeeAttendanceHistoryState extends State<EmployeeAttendanceHistory> {
                                                 CrossAxisAlignment.center,
                                             children: [
                                               Text("Check Out",
-                                                  style: TextStyle(
-                                                      fontSize:
-                                                          screenWidth / 20,
-                                                      color: AppColors.red)),
+                                                style: GoogleFonts.outfit(
+                                                  color: AppColors.red,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,)),
                                               Text(snap[index]["checkOut"],
                                                   style: const TextStyle(
                                                       fontSize: 20,
